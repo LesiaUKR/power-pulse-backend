@@ -20,6 +20,6 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "nodemon": ">=14.20.1"
   }
 }
