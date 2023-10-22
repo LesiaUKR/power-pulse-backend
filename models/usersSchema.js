@@ -1,5 +1,4 @@
-const { default: mongoose, now } = require("mongoose");
-const Joi = require('joi')
+const { default: mongoose } = require("mongoose");
 const EMAIL_REGEX = require("../helpers/constants");
 
 const UserSchema = new mongoose.Schema({
@@ -21,15 +20,9 @@ const UserSchema = new mongoose.Schema({
         min: 6,
     },
     token: String,
-    avatarUrl: String,
-    verify: {
-        type: Boolean,
-        default: false
-    },
-    verificationToken: {
+    avatarUrl: {
         type: String,
-        // required: [true, 'Verify token is required'],
-
+        default: '',
     },
     bodyParams: {
         height: {
@@ -67,8 +60,6 @@ const UserSchema = new mongoose.Schema({
             required: [true, "Activity level is required"]
         }
     }
-
-
 }, { versionKey: false, timestamps: true })
 
 const bodyParamsSchema = Joi.object({
@@ -90,4 +81,3 @@ const bodyParamsSchema = Joi.object({
 const schemas = { bodyParamsSchema }
 
 module.exports = {UserSchema, schemas};
-

@@ -5,11 +5,12 @@ const singin = require('../../controllers/auth/singin');
 const logout = require('../../controllers/auth/logout');
 const refresh = require('../../controllers/auth/refresh');
 const dailyMetrics = require('../../controllers/auth/dailyMetrics')
+const auth = require('../../midlewares/auth');
 const router = express.Router();
 
 router.post('/users/register', singup);
 router.post('/users/login', singin);
-router.post('/users/logout', logout);
+router.post('/users/logout',auth , logout);
 router.get('/users', current);
 router.post('/users/verify', refresh);
 //private
