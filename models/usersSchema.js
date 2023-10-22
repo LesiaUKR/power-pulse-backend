@@ -20,16 +20,11 @@ const UserSchema = new mongoose.Schema({
         min: 6,
     },
     token: String,
-    avatarUrl: String,
-    verify: {
-        type: Boolean,
-        default: false
-      },
-      verificationToken: {
+    avatarUrl: {
         type: String,
-        // required: [true, 'Verify token is required'],
-        
-      },
+        default: '',
+    },
+    
 }, { versionKey: false, timestamps: true })
 
 module.exports = UserSchema;

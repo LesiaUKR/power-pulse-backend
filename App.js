@@ -20,13 +20,13 @@ app.use((req, res) => {
   res.status(404).json({ message: 'Not found' })
 })
 
-// app.use((err, req, res, next) => {
-//     // console.log(err)
-//     res.status(err.code).json({
-//         message: err.message || '',
-//         status: err.status,
-//         code: err.code,
-//     });
-// })
+app.use((err, req, res, next) => {
+    // console.log(err)
+    res.status(err.code).json({
+        message: err.message || '',
+        status: err.status,
+        code: err.code,
+    });
+})
 
 module.exports = app;
