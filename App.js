@@ -4,6 +4,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const loginRouter = require('./routes/auth/auth');
+const exercisesRouter = require('./routes/exercises')
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api', loginRouter);
+app.use('/api/exercises', exercisesRouter)
 
 
 app.use((req, res) => {
