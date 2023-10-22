@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const { default: mongoose } = require('mongoose');
 const UserSchema = require('./usersSchema');
 
 const Users = mongoose.model('user', UserSchema);
