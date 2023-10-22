@@ -9,11 +9,12 @@
   "produces": ["application/json"],
   "servers": [
     {
-      "url": "http://localhost:3001/api"
+      "url": "https://power-pulse-rh13.onrender.com/api"
     },
     {
-      "url": "https://power-pulse-rh13.onrender.com/api"
+      "url": "http://localhost:3001/api"
     }
+    
   ],
   "tags": [
     {
@@ -27,6 +28,10 @@
     {
       "name": "Logout",
       "description": "Logout endpoint"
+    },
+    {
+      "name": "Current",
+      "description": "Refresh endpoint"
     }
   ],
   "paths": {
@@ -118,6 +123,27 @@
           },
           "400": {
             "description": "Bad request",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": ["Current"],
+        "summary": "user current",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK, login success"
+          },
+          "401": {
+            "description": "Not authorized",
             "content": {}
           }
         }
