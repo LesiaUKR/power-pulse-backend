@@ -1,5 +1,6 @@
 const { default: mongoose } = require("mongoose");
 const EMAIL_REGEX = require("../helpers/constants");
+const Joi = require('joi')
 
 const UserSchema = new mongoose.Schema({
     name: {
