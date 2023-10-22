@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const createError = require("../helpers/createError");
 const { JWT_SECRET_KEY } = process.env;
 const auth = async (req, res, next) => {
+    
     const [_, token] = req.headers.authorization.split(" ");
     try{
         const decoded = jwt.verify(token, JWT_SECRET_KEY);
@@ -9,7 +10,7 @@ const auth = async (req, res, next) => {
         req.user = id; 
     }catch(err){
         next(createError('UNAUTHORIZED'), err);
-    }
+    } 
     
     next();
 }
