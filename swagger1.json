@@ -1,5 +1,5 @@
- {
-    "openapi": "3.0.1",
+{
+  "openapi": "3.0.1",
   "info": {
     "title": "Power-Pulse",
     "description": "",
@@ -17,10 +17,21 @@
   ],
   "tags": [
     {
-      "name": "Auth",
+      "name": "Register",
       "description": "Authorization endpoint"
     },
-    
+    {
+      "name": "Login",
+      "description": "Login endpoint"
+    },
+    {
+      "name": "Logout",
+      "description": "Logout endpoint"
+    },
+    {
+      "name": "Current",
+      "description": "Refresh endpoint"
+    },
     {
       "name": "Exercises",
       "description": "Exercises endpoints"
@@ -29,7 +40,7 @@
   "paths": {
     "/users/register": {
       "post": {
-        "tags": ["Auth"],
+        "tags": ["Register"],
         "summary": "user registration",
         "parameters": [],
         "requestBody": {
@@ -67,7 +78,7 @@
     },
     "/users/login": {
       "post": {
-        "tags": ["Auth"],
+        "tags": ["Login"],
         "summary": "user login",
         "parameters": [],
         "requestBody": {
@@ -101,7 +112,7 @@
     },
     "/users/logout": {
       "post": {
-        "tags": ["Auth"],
+        "tags": ["Logout"],
         "summary": "user logout",
         "security": [
           {
@@ -122,7 +133,7 @@
     },
     "/users": {
       "get": {
-        "tags": ["Auth"],
+        "tags": ["Current"],
         "summary": "user current",
         "security": [
           {
@@ -196,7 +207,6 @@
           }
         }
       }
-    }
     },
     "components": {
       "securitySchemes": {
@@ -323,7 +333,7 @@
             }
           }
         }
-        
-        }
+      }
     }
- }
+  }
+}
