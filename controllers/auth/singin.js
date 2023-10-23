@@ -17,6 +17,7 @@ const singin = async (req, res, next) => {
                 res.status(200);
                 res.json({
                     message: "login success",
+                    email,
                     token
                 })
             } else {
