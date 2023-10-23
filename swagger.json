@@ -27,6 +27,10 @@
     {
       "name": "Logout",
       "description": "Logout endpoint"
+    },
+    {
+      "name": "Exercises",
+      "description": "Exercises endpoints"
     }
   ],
   "paths": {
@@ -122,6 +126,58 @@
           }
         }
       }
+    },
+    "/exercises/": {
+      "get": {
+        "tags": ["Exercises"],
+        "summary": "Get all exercises",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/allExercisesResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/exercises/details": {
+      "get": {
+        "tags": ["Exercises"],
+        "summary": "Get all exercises details",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/detailsResponse"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          }
+        }
+      }
     }
   },
   "components": {
@@ -169,6 +225,83 @@
             "type": "string",
             "description": "User's password",
             "example": "1234567"
+          }
+        }
+      },
+      "allExercisesResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "Exercises id",
+              "example": "64f2458d6f67bc34bae4f7f8"
+            },
+            "bodyPart": {
+              "type": "string",
+              "description": "The part of the body for which the exercise is intended",
+              "example": "chest"
+            },
+            "equipment": {
+              "type": "string",
+              "description": "Equipment is necessary to perform the exercise",
+              "example": "leverage machine"
+            },
+            "gifUrl": {
+              "type": "string",
+              "description": "Illustration of how to perform the exercise",
+              "example": "https://ftp.goit.study/img/power-pulse/gifs/0009.gif"
+            },
+            "name": {
+              "type": "string",
+              "description": "Exercise name",
+              "example": "assisted chest dip (kneeling)"
+            },
+            "target": {
+              "type": "string",
+              "description": "The muscle for which the exercise is intended",
+              "example": "pectorals"
+            },
+            "burnedCalories": {
+              "type": "integer",
+              "description": "Amount of calories that were burnt",
+              "example": 329
+            },
+            "time": {
+              "type": "number",
+              "description": "The minimum amount of time to perform the exercise",
+              "example": 3
+            }
+          }
+        }
+      },
+      "detailsResponse": {
+        "type": "object",
+        "properties": {
+          "bodyParts": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "All body parts",
+              "example": "chest"
+            }
+          },
+          "equipments": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "All equipment",
+              "example": "barbell"
+            }
+          },
+          "muscles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "description": "All muscles",
+              "example": "biceps"
+            }
           }
         }
       }
