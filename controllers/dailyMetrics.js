@@ -2,14 +2,15 @@ const { createError } = require("../helpers");
 const Users = require("../models/users");
 
 const getBMR = async (req, res, next) => {
-        try {
-            const data = await Users.findByIdAndUpdate(req.user, { bodyParams: { ...req.body } });  
+    try {
+            const updBodyParams = {bodyParams: { ...req.body }}
+            const data = await Users.findByIdAndUpdate(req.user, { ...updBodyParams });  
             res.status(200);
             res.json({
                 message: 'contact updated',
                 status: 'Update',
                 code: 200,
-                // data: data.bodyParams
+                data: updBodyParams
             })
             
         } catch (err) {
