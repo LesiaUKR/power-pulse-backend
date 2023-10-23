@@ -8,7 +8,6 @@ const singup = async (req, res, next) => {
     const { email, password: pass } = req.body;
     const avatarUrl = gravatar.url(email);
     const password = await bcrypt.hash(pass, 10);
-    console.log(password)
     try {
         const user = await Users.create({ ...req.body, avatarUrl });
         const {_id} = user;

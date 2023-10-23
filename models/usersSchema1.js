@@ -81,4 +81,4 @@ const bodyParamsSchema = Joi.object({
 
 const schemas = { bodyParamsSchema }
 
-module.exports = {UserSchema, schemas};
+// module.exports = {UserSchema, schemas};
