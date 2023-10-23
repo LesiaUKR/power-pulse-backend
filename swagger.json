@@ -150,56 +150,56 @@
             "content": {}
           }
         }
-      },
-      "/exercises/": {
-        "get": {
-          "tags": ["Exercises"],
-          "summary": "Get all exercises",
-          "security": [
-            {
-              "Bearer": []
-            }
-          ],
-          "parameters": [],
-          "responses": {
-            "200": {
-              "description": "Success",
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/allExercisesResponse"
-                }
+      }
+    },
+    "/exercises": {
+      "get": {
+        "tags": ["Exercises"],
+        "summary": "Get all exercises",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/allExercisesResponse"
               }
-            },
-            "400": {
-              "description": "Bad request",
-              "content": {}
             }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
           }
         }
-      },
-      "/exercises/details": {
-        "get": {
-          "tags": ["Exercises"],
-          "summary": "Get all exercises details",
-          "security": [
-            {
-              "Bearer": []
-            }
-          ],
-          "parameters": [],
-          "responses": {
-            "200": {
-              "description": "Success",
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/detailsResponse"
-                }
+      }
+    },
+    "/exercises/details": {
+      "get": {
+        "tags": ["Exercises"],
+        "summary": "Get all exercises details",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/detailsResponse"
               }
-            },
-            "400": {
-              "description": "Bad request",
-              "content": {}
             }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
           }
         }
       }
