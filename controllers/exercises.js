@@ -9,25 +9,36 @@ const getAllExercises = async (req, res) => {
     res.json(exercises)
 }
 
-const getAllDetails = async (req, res) => {
+const getAllBodyParts = async (req, res) => {
     const exercises = await Exercises.find();
     if (!exercises) {
         throw createError(errorType.BAD_REQUEST)
     }
     const bodyParts = [...new Set(exercises.map(exercise => exercise.bodyPart))]
-    const equipments = [...new Set(exercises.map(exercise => exercise.equipment))]
-    const muscles = [...new Set(exercises.map(exercise => exercise.target))]
+    res.json(bodyParts)
+}
 
-    const details = {
-        bodyParts,
-        equipments,
-        muscles
+const getAllEquipments = async (req, res) => {
+    const exercises = await Exercises.find();
+    if (!exercises) {
+        throw createError(errorType.BAD_REQUEST)
     }
-    res.status(200).json(details)
-    
+    const equipments = [...new Set(exercises.map(exercise => exercise.equipment))]
+    res.json(equipments)
+}
+
+const getAllMuscles = async (req, res) => {
+    const exercises = await Exercises.find();
+    if (!exercises) {
+        throw createError(errorType.BAD_REQUEST)
+    }
+    const muscles = [...new Set(exercises.map(exercise => exercise.target))]
+    res.json(muscles)
 }
 
 module.exports = {
     getAllExercises: ctrlWrapper(getAllExercises),
-    getAllDetails: ctrlWrapper(getAllDetails)
+    getAllBodyParts: ctrlWrapper(getAllBodyParts),
+    getAllEquipments: ctrlWrapper(getAllEquipments),
+    getAllMuscles: ctrlWrapper(getAllMuscles)
 }
