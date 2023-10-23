@@ -24,7 +24,43 @@ const UserSchema = new mongoose.Schema({
         type: String,
         default: '',
     },
-    
+    bodyParams: {
+        height: {
+            type: Number,
+            default: 0,
+            
+        },
+        currentWeight: {
+            type: Number,
+            default: 0,
+            
+        },
+        desiredWeight: {
+            type: Number,
+            default: 0,
+            
+        },
+        birthday: {
+            type: Date,
+            default: 0,
+            
+        },
+        blood: {
+            type: Number,
+            default: 0,
+           
+        },
+        sex: {
+            type: String,
+            default: '',
+            
+        },
+        levelActivity: {
+            type: Number,
+            default: 0,
+            
+        }
+    }
 }, { versionKey: false, timestamps: true })
 
 module.exports = UserSchema;

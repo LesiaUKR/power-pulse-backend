@@ -9,6 +9,8 @@ const validateSignUp = require("../../middlewares/validateSignUp");
 const schemaRegister = require("../../middlewares/schemaRegister");
 const validateSignIn = require("../../middlewares/validateSignIn");
 const schemaLogin = require("../../middlewares/schemaLogin");
+const validateBMR = require("../../middlewares/validateBMR");
+const schemaBMR = require("../../middlewares/schemaBMR");
 const router = express.Router();
 
 router.post("/users/register",validateSignUp(schemaRegister), singup);
@@ -16,6 +18,6 @@ router.post("/users/login",validateSignIn(schemaLogin), singin);
 router.post("/users/logout", auth, logout);
 router.get("/users",auth, current);
 
-router.patch("/users/dailyMetrics",auth, dailyMetrics);
+router.patch("/users/dailyMetrics",auth,validateBMR(schemaBMR) , dailyMetrics);
 
 module.exports = router;
