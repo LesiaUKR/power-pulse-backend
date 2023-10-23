@@ -141,6 +141,45 @@
         }
       }
     },
+    "/users/dailyMetrics": {
+      "patch": {
+        "tags": ["Auth"],
+        "summary": "user update data",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/usersUpdateSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "contact updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/usersUpdateSchema"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {}
+          }
+        }
+      }
+    },
     "/exercises": {
       "get": {
         "tags": ["Exercises"],
@@ -243,6 +282,46 @@
               "type": "string",
               "description": "User's password",
               "example": "1234567"
+            }
+          }
+        },
+        "usersUpdateSchema": {
+          "type": "object",
+          "properties": {
+            "height": {
+              "type": "integer",
+              "description": "User's height",
+              "example": "180"
+            },
+            "currentWeight": {
+              "type": "integer",
+              "description": "User's currentWeight",
+              "example": "80"
+            },
+            "desiredWeight": {
+              "type": "integer",
+              "description": "User's desiredWeight",
+              "example": "75"
+            },
+            "birthday": {
+              "type": "date",
+              "description": "User's birthday",
+              "example": "2000-12-01"
+            },
+            "blood": {
+              "type": "integer",
+              "description": "User's blood",
+              "example": "2"
+            },
+            "sex": {
+              "type": "string",
+              "description": "User's sex",
+              "example": "male"
+            },
+            "levelActivity": {
+              "type": "integer",
+              "description": "User's levelActivity",
+              "example": "2"
             }
           }
         },
