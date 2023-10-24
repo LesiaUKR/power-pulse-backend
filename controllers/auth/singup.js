@@ -5,10 +5,9 @@ const gravatar = require('gravatar');
 const createError = require("../../helpers/createError");
 const { JWT_SECRET_KEY } = process.env;
 const singup = async (req, res, next) => {
-    const { email, password: pass } = req.body;
+    const { name, email, password: pass } = req.body;
     const avatarUrl = gravatar.url(email);
     const password = await bcrypt.hash(pass, 10);
-    console.log(password)
     try {
         const user = await Users.create({ ...req.body, avatarUrl });
         const {_id} = user;
@@ -17,6 +16,8 @@ const singup = async (req, res, next) => {
         res.status(201);
         res.json({
             message: "User created",
+            name,
+            email,
             token
         })
         
