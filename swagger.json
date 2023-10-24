@@ -1,5 +1,5 @@
- {
-    "openapi": "3.0.1",
+{
+  "openapi": "3.0.1",
   "info": {
     "title": "Power-Pulse",
     "description": "",
@@ -18,9 +18,9 @@
   "tags": [
     {
       "name": "Auth",
-      "description": "Authorization endpoint"
+      "description": "Authorization endpoints"
     },
-    
+
     {
       "name": "Exercises",
       "description": "Exercises endpoints"
@@ -194,12 +194,12 @@
           "200": {
             "description": "Success",
             "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/allExercisesResponse"
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/allExercisesResponse"
+                }
               }
             }
-          }
           },
           "400": {
             "description": "Bad request",
@@ -208,10 +208,10 @@
         }
       }
     },
-    "/exercises/details": {
+    "/exercises/bodyParts": {
       "get": {
         "tags": ["Exercises"],
-        "summary": "Get all exercises details",
+        "summary": "Get all exercises by body parts",
         "security": [
           {
             "Bearer": []
@@ -220,189 +220,143 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/detailsResponse"
-              }
-            }
-          }
+            "description": "Success"
           },
-          "400": {
-            "description": "Bad request",
-            "content": {}
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/exercises/equipment": {
+      "get": {
+        "tags": ["Exercises"],
+        "summary": "Get all exercises by equipment",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/exercises/muscles": {
+      "get": {
+        "tags": ["Exercises"],
+        "summary": "Get all exercises by muscles",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not found"
           }
         }
       }
     }
+  },
+  "components": {
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
     },
-    "components": {
-      "securitySchemes": {
-        "Bearer": {
-          "type": "http",
-          "scheme": "bearer",
-          "bearerFormat": "JWT"
+    "schemas": {
+      "usersSchema": {
+        "type": "object",
+        "required": ["name", "email", "password"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "User"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "user@mail.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "1234567"
+          }
         }
       },
-      "schemas": {
-        "usersSchema": {
-          "type": "object",
-          "required": ["name", "email", "password"],
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "User's name",
-              "example": "User"
-            },
-            "email": {
-              "type": "string",
-              "description": "User's email",
-              "format": "email",
-              "example": "user@mail.com"
-            },
-            "password": {
-              "type": "string",
-              "description": "User's password",
-              "example": "1234567"
-            }
-          }
-        },
-        "loginSchema": {
-          "type": "object",
-          "required": ["email", "password"],
-          "properties": {
-            "email": {
-              "type": "string",
-              "description": "User's email",
-              "format": "email",
-              "example": "user@mail.com"
-            },
-            "password": {
-              "type": "string",
-              "description": "User's password",
-              "example": "1234567"
-            }
-          }
-        },
-        "usersUpdateSchema": {
-          "type": "object",
-          "properties": {
-            "height": {
-              "type": "integer",
-              "description": "User's height",
-              "example": "180"
-            },
-            "currentWeight": {
-              "type": "integer",
-              "description": "User's currentWeight",
-              "example": "80"
-            },
-            "desiredWeight": {
-              "type": "integer",
-              "description": "User's desiredWeight",
-              "example": "75"
-            },
-            "birthday": {
-              "type": "date",
-              "description": "User's birthday",
-              "example": "2000-12-01"
-            },
-            "blood": {
-              "type": "integer",
-              "description": "User's blood",
-              "example": "2"
-            },
-            "sex": {
-              "type": "string",
-              "description": "User's sex",
-              "example": "male"
-            },
-            "levelActivity": {
-              "type": "integer",
-              "description": "User's levelActivity",
-              "example": "2"
-            }
-          }
-        },
-        "allExercisesResponse": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "_id": {
-                "type": "string",
-                "description": "Exercises id",
-                "example": "64f2458d6f67bc34bae4f7f8"
-              },
-              "bodyPart": {
-                "type": "string",
-                "description": "The part of the body for which the exercise is intended",
-                "example": "chest"
-              },
-              "equipment": {
-                "type": "string",
-                "description": "Equipment is necessary to perform the exercise",
-                "example": "leverage machine"
-              },
-              "gifUrl": {
-                "type": "string",
-                "description": "Illustration of how to perform the exercise",
-                "example": "https://ftp.goit.study/img/power-pulse/gifs/0009.gif"
-              },
-              "name": {
-                "type": "string",
-                "description": "Exercise name",
-                "example": "assisted chest dip (kneeling)"
-              },
-              "target": {
-                "type": "string",
-                "description": "The muscle for which the exercise is intended",
-                "example": "pectorals"
-              },
-              "burnedCalories": {
-                "type": "integer",
-                "description": "Amount of calories that were burnt",
-                "example": 329
-              },
-              "time": {
-                "type": "number",
-                "description": "The minimum amount of time to perform the exercise",
-                "example": 3
-              }
-            }
-          }
-        },
-        "detailsResponse": {
-          "type": "object",
-          "properties": {
-            "bodyParts": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "description": "All body parts",
-                "example": "chest"
-              }
-            },
-            "equipments": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "description": "All equipment",
-                "example": "barbell"
-              }
-            },
-            "muscles": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "description": "All muscles",
-                "example": "biceps"
-              }
-            }
+      "loginSchema": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "user@mail.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "1234567"
           }
         }
-        
+      },
+      "usersUpdateSchema": {
+        "type": "object",
+        "properties": {
+          "height": {
+            "type": "integer",
+            "description": "User's height",
+            "example": "180"
+          },
+          "currentWeight": {
+            "type": "integer",
+            "description": "User's currentWeight",
+            "example": "80"
+          },
+          "desiredWeight": {
+            "type": "integer",
+            "description": "User's desiredWeight",
+            "example": "75"
+          },
+          "birthday": {
+            "type": "date",
+            "description": "User's birthday",
+            "example": "2000-12-01"
+          },
+          "blood": {
+            "type": "integer",
+            "description": "User's blood",
+            "example": "2"
+          },
+          "sex": {
+            "type": "string",
+            "description": "User's sex",
+            "example": "male"
+          },
+          "levelActivity": {
+            "type": "integer",
+            "description": "User's levelActivity",
+            "example": "2"
+          }
         }
+      }
     }
- }
+  }
+}
