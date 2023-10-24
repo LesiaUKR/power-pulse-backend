@@ -1,5 +1,6 @@
 const { ctrlWrapper, createError, errorType } = require("../helpers")
 const { Exercises } = require('../models/exercise')
+const { Filters } = require ('../models/filter')
 
 const getAllExercises = async (req, res) => {
     const exercises = await Exercises.find()
@@ -10,29 +11,30 @@ const getAllExercises = async (req, res) => {
 }
 
 const getAllBodyParts = async (req, res) => {
-    const exercises = await Exercises.find();
-    if (!exercises) {
-        throw createError(errorType.BAD_REQUEST)
+    const filters = await Filters.find();
+    if (!filters) {
+        throw createError(errorType.NOT_FOUND)
     }
-    const bodyParts = [...new Set(exercises.map(exercise => exercise.bodyPart))]
+    const bodyParts = [...new Set(filters.filter(filter => filter.filter === "Body parts"))]
+    console.log(bodyParts)
     res.json(bodyParts)
 }
 
 const getAllEquipments = async (req, res) => {
-    const exercises = await Exercises.find();
-    if (!exercises) {
-        throw createError(errorType.BAD_REQUEST)
+    const filters = await Filters.find();
+    if (!filters) {
+        throw createError(errorType.NOT_FOUND)
     }
-    const equipments = [...new Set(exercises.map(exercise => exercise.equipment))]
+    const equipments = [...new Set(filters.filter(filter => filter.filter === "Equipment"))]
     res.json(equipments)
 }
 
 const getAllMuscles = async (req, res) => {
-    const exercises = await Exercises.find();
-    if (!exercises) {
-        throw createError(errorType.BAD_REQUEST)
+    const filters = await Filters.find();
+    if (!filters) {
+        throw createError(errorType.NOT_FOUND)
     }
-    const muscles = [...new Set(exercises.map(exercise => exercise.target))]
+    const muscles = [...new Set(filters.filter(filter => filter.filter === "Muscles"))]
     res.json(muscles)
 }
 
