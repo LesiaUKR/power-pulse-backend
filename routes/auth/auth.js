@@ -11,6 +11,8 @@ const validateSignIn = require("../../middlewares/validateSignIn");
 const schemaLogin = require("../../middlewares/schemaLogin");
 const validateBMR = require("../../middlewares/validateBMR");
 const schemaBMR = require("../../middlewares/schemaBMR");
+const userChangeData = require("../../controllers/userChangeData");
+const uploadFile = require("../../middlewares/uploadFile");
 const router = express.Router();
 
 router.post("/users/register",validateSignUp(schemaRegister), singup);
@@ -19,5 +21,6 @@ router.post("/users/logout", auth, logout);
 router.get("/users",auth, current);
 
 router.patch("/users/dailyMetrics",auth,validateBMR(schemaBMR) , dailyMetrics);
-
+router.patch("/users/changeData", auth, uploadFile.single("avatar"), userChangeData);
 module.exports = router;
+
