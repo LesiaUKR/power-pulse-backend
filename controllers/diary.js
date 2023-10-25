@@ -70,6 +70,30 @@ const deleteExercise = async (req, res) => {
     res.json(exerciseToDelete)
 }
 
+const getDiary = async (req, res) => {
+    console.log("first")
+    const owner = req.user;
+    const { date } = req.query;
+    console.log(req)
+    if (Object.keys(req.query).length < 1) {
+        throw createError("NOT_FOUND", 'Enter the date!');
+    }
+    const eatenProducts = await DiaryProducts.find({ owner, date })
+    console.log(eatenProducts)
+    const doneExercises = await DiaryExercises.find({ owner, date })
+
+    const consumedCalories = eatenProducts.map((product) => product.calories).reduce((prev, val) => prev += val, 0)
+    const burnedCalories = doneExercises.map((exercise) => exercise.burnedCalories).reduce((prev, val) => prev += val, 0)
+    const sportTime = doneExercises.map((exercise) => exercise.time).reduce((prev, val) => prev += val, 0)
+
+        res.json({
+            eatenProducts,
+            doneExercises,
+            consumedCalories,
+            burnedCalories,
+            sportTime
+        })
+}
 
 
 module.exports = {
@@ -77,5 +101,5 @@ module.exports = {
     deleteProduct: ctrlWrapper(deleteProduct),
     addExercise: ctrlWrapper(addExercise),
     deleteExercise: ctrlWrapper(deleteExercise),
-    //   getDiary: ctrlWrapper(getDiary),
+    getDiary: ctrlWrapper(getDiary),
 };

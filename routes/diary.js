@@ -14,6 +14,6 @@ router.delete('/deleteproduct', auth, validateBody(delProductSchema), ctrl.delet
 
 router.delete('/deleteexercise', auth, validateBody(delExerciseSchema) ,ctrl.deleteExercise);
 
-// router.get('/', auth, ctrl.getDiary);
+router.get('/', auth, ctrl.getDiary);
 
 module.exports = router;
