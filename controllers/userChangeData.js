@@ -3,6 +3,22 @@ const { createError } = require("../helpers");
 const Users = require("../models/users");
 const cloudinary = require('cloudinary').v2;
 const { CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET } = process.env;
+const resJson = {
+    message: 'contact updated',
+    status: 'Update',
+    code: 200,   
+}
+const updPhotoUrlBD = async (id, field) => {
+    try {
+        const data = await Users.findByIdAndUpdate(id, field);
+        
+    } catch (err) {
+        next(createError('NOT_FOUND', err.message));
+    }
+    
+}
+
+
 const userChangeData = async (req, res, next) => {
     
     const avaPathTemp = path.join(__dirname, "../", "temp", `${req.user}.jpg`); 
@@ -14,7 +30,8 @@ const userChangeData = async (req, res, next) => {
 
     try {
         const result= await cloudinary.uploader.upload(avaPathTemp, { "tags": "basic_sample", "width": 150, "height": 100, "crop": "fit" })
-        console.log(result)
+        await updPhotoUrlBD(req.user, { avatarUrl: result.url });
+        resJson.avatarUrl = result.url; 
         
     } catch (err) {
        console.log(err) 
@@ -22,19 +39,13 @@ const userChangeData = async (req, res, next) => {
     
     
     if (req.query.name) {
-        try {
-            const data = await Users.findByIdAndUpdate(req.user, { name: req.query.name });
-            res.status(200);
-            res.json({
-                message: 'contact updated',
-                status: 'Update',
-                code: 200,
-                data: req.query
-            })
-            
-        } catch (err) {
-            next(createError('NOT_FOUND', err.message));
-        }
+       await updPhotoUrlBD(req.user, { name: req.query.name });
+       resJson.name = req.query.name; 
     } else next();
+    
+    res.status(200);
+    res.json({
+        ...resJson
+    })
 }
 module.exports = userChangeData;
