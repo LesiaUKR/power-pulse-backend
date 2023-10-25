@@ -1,5 +1,6 @@
 const createError = require("../helpers/createError");
-const validate = (target)=>(schema, mess='')=>(req, res, next) => {
+const validate = (target) => (schema, mess = '') => (req, res, next) => {
+    console.log(target)
     const data = target === 'body' 
             ? req.body 
             : {contactId: req.params.contactId}; 
