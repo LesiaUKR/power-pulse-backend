@@ -16,7 +16,6 @@ const getAllBodyParts = async (req, res) => {
         throw createError(errorType.NOT_FOUND)
     }
     const bodyParts = [...new Set(filters.filter(filter => filter.filter === "Body parts"))]
-    console.log(bodyParts)
     res.json(bodyParts)
 }
 

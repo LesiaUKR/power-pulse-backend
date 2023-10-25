@@ -140,8 +140,7 @@
           }
         }
       }
-    },
-    "/users/dailyMetrics": {
+    },"/users/dailyMetrics": {
       "patch": {
         "tags": ["Auth"],
         "summary": "user update data",
@@ -169,6 +168,45 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/usersUpdateSchema"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/users/changeData": {
+      "patch": {
+        "tags": ["Auth"],
+        "summary": "user update data",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/usersChangeData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "contact updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/usersChangeData"
                 }
               }
             }
@@ -208,10 +246,10 @@
         }
       }
     },
-    "/exercises/details": {
+    "/exercises/bodyParts": {
       "get": {
         "tags": ["Exercises"],
-        "summary": "Get all exercises details",
+        "summary": "Get all exercises by body parts",
         "security": [
           {
             "Bearer": []
@@ -220,22 +258,55 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/detailsResponse"
-              }
-            }
-          }
+            "description": "Success"
           },
-          "400": {
-            "description": "Bad request",
-            "content": {}
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/exercises/equipment": {
+      "get": {
+        "tags": ["Exercises"],
+        "summary": "Get all exercises by equipment",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/exercises/muscles": {
+      "get": {
+        "tags": ["Exercises"],
+        "summary": "Get all exercises by muscles",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not found"
           }
         }
       }
     }
+    
     },
     "components": {
       "securitySchemes": {
@@ -286,45 +357,56 @@
           }
         },
         "usersUpdateSchema": {
-          "type": "object",
-          "properties": {
-            "height": {
-              "type": "integer",
-              "description": "User's height",
-              "example": "180"
-            },
-            "currentWeight": {
-              "type": "integer",
-              "description": "User's currentWeight",
-              "example": "80"
-            },
-            "desiredWeight": {
-              "type": "integer",
-              "description": "User's desiredWeight",
-              "example": "75"
-            },
-            "birthday": {
-              "type": "date",
-              "description": "User's birthday",
-              "example": "2000-12-01"
-            },
-            "blood": {
-              "type": "integer",
-              "description": "User's blood",
-              "example": "2"
-            },
-            "sex": {
-              "type": "string",
-              "description": "User's sex",
-              "example": "male"
-            },
-            "levelActivity": {
-              "type": "integer",
-              "description": "User's levelActivity",
-              "example": "2"
-            }
+        "type": "object",
+        "properties": {
+          "height": {
+            "type": "integer",
+            "description": "User's height",
+            "example": "180"
+          },
+          "currentWeight": {
+            "type": "integer",
+            "description": "User's currentWeight",
+            "example": "80"
+          },
+          "desiredWeight": {
+            "type": "integer",
+            "description": "User's desiredWeight",
+            "example": "75"
+          },
+          "birthday": {
+            "type": "date",
+            "description": "User's birthday",
+            "example": "2000-12-01"
+          },
+          "blood": {
+            "type": "integer",
+            "description": "User's blood",
+            "example": "2"
+          },
+          "sex": {
+            "type": "string",
+            "description": "User's sex",
+            "example": "male"
+          },
+          "levelActivity": {
+            "type": "integer",
+            "description": "User's levelActivity",
+            "example": "2"
           }
-        },
+        }
+      },
+      "usersChangeData":{
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Update user's name",
+            "example": "Name Surname"
+          }
+                    
+        }
+      },
         "allExercisesResponse": {
           "type": "array",
           "items": {
@@ -372,37 +454,8 @@
               }
             }
           }
-        },
-        "detailsResponse": {
-          "type": "object",
-          "properties": {
-            "bodyParts": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "description": "All body parts",
-                "example": "chest"
-              }
-            },
-            "equipments": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "description": "All equipment",
-                "example": "barbell"
-              }
-            },
-            "muscles": {
-              "type": "array",
-              "items": {
-                "type": "string",
-                "description": "All muscles",
-                "example": "biceps"
-              }
-            }
-          }
         }
-        
+                
         }
     }
  }
