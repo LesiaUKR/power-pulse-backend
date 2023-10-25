@@ -1,4 +1,5 @@
 const path = require("path");
+const fs = require("fs/promises");
 const { createError } = require("../helpers");
 const Users = require("../models/users");
 const cloudinary = require('cloudinary').v2;
@@ -8,6 +9,7 @@ const resJson = {
     status: 'Update',
     code: 200,   
 }
+
 const updPhotoUrlBD = async (id, field) => {
     try {
         const data = await Users.findByIdAndUpdate(id, field);
@@ -30,22 +32,30 @@ const userChangeData = async (req, res, next) => {
 
     try {
         const result= await cloudinary.uploader.upload(avaPathTemp, { "tags": "basic_sample", "width": 150, "height": 100, "crop": "fit" })
-        await updPhotoUrlBD(req.user, { avatarUrl: result.url });
-        resJson.avatarUrl = result.url; 
-        
+        if (result) {
+            await updPhotoUrlBD(req.user, { avatarUrl: result.url });
+            await fs.unlink(avaPathTemp);
+            resJson.avatarUrl = result.url; 
+            
+        }
     } catch (err) {
-       console.log(err) 
+        delete resJson.avatarUrl
+        console.log(err);
+        
     }
     
     
     if (req.query.name) {
        await updPhotoUrlBD(req.user, { name: req.query.name });
-       resJson.name = req.query.name; 
-    } else next();
+        resJson.name = req.query.name; 
+        
+    } else{delete resJson.name}
     
+
     res.status(200);
     res.json({
-        ...resJson
+        ...resJson,
+        
     })
 }
 module.exports = userChangeData;
