@@ -1,5 +1,5 @@
-{
-  "openapi": "3.0.1",
+ {
+    "openapi": "3.0.1",
   "info": {
     "title": "Power-Pulse",
     "description": "",
@@ -18,9 +18,9 @@
   "tags": [
     {
       "name": "Auth",
-      "description": "Authorization endpoints"
+      "description": "Authorization endpoint"
     },
-
+    
     {
       "name": "Exercises",
       "description": "Exercises endpoints"
@@ -140,8 +140,7 @@
           }
         }
       }
-    },
-    "/users/dailyMetrics": {
+    },"/users/dailyMetrics": {
       "patch": {
         "tags": ["Auth"],
         "summary": "user update data",
@@ -180,6 +179,45 @@
         }
       }
     },
+    "/users/changeData": {
+      "patch": {
+        "tags": ["Auth"],
+        "summary": "user update data",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/usersChangeData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "contact updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/usersChangeData"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {}
+          }
+        }
+      }
+    },
     "/exercises": {
       "get": {
         "tags": ["Exercises"],
@@ -194,12 +232,12 @@
           "200": {
             "description": "Success",
             "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/allExercisesResponse"
-                }
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/allExercisesResponse"
               }
             }
+          }
           },
           "400": {
             "description": "Bad request",
@@ -268,56 +306,57 @@
         }
       }
     }
-  },
-  "components": {
-    "securitySchemes": {
-      "Bearer": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
-      }
+    
     },
-    "schemas": {
-      "usersSchema": {
-        "type": "object",
-        "required": ["name", "email", "password"],
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "User's name",
-            "example": "User"
-          },
-          "email": {
-            "type": "string",
-            "description": "User's email",
-            "format": "email",
-            "example": "user@mail.com"
-          },
-          "password": {
-            "type": "string",
-            "description": "User's password",
-            "example": "1234567"
-          }
+    "components": {
+      "securitySchemes": {
+        "Bearer": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
         }
       },
-      "loginSchema": {
-        "type": "object",
-        "required": ["email", "password"],
-        "properties": {
-          "email": {
-            "type": "string",
-            "description": "User's email",
-            "format": "email",
-            "example": "user@mail.com"
-          },
-          "password": {
-            "type": "string",
-            "description": "User's password",
-            "example": "1234567"
+      "schemas": {
+        "usersSchema": {
+          "type": "object",
+          "required": ["name", "email", "password"],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "User's name",
+              "example": "User"
+            },
+            "email": {
+              "type": "string",
+              "description": "User's email",
+              "format": "email",
+              "example": "user@mail.com"
+            },
+            "password": {
+              "type": "string",
+              "description": "User's password",
+              "example": "1234567"
+            }
           }
-        }
-      },
-      "usersUpdateSchema": {
+        },
+        "loginSchema": {
+          "type": "object",
+          "required": ["email", "password"],
+          "properties": {
+            "email": {
+              "type": "string",
+              "description": "User's email",
+              "format": "email",
+              "example": "user@mail.com"
+            },
+            "password": {
+              "type": "string",
+              "description": "User's password",
+              "example": "1234567"
+            }
+          }
+        },
+        "usersUpdateSchema": {
         "type": "object",
         "properties": {
           "height": {
@@ -356,7 +395,67 @@
             "example": "2"
           }
         }
-      }
+      },
+      "usersChangeData":{
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Update user's name",
+            "example": "Name Surname"
+          }
+                    
+        }
+      },
+        "allExercisesResponse": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "_id": {
+                "type": "string",
+                "description": "Exercises id",
+                "example": "64f2458d6f67bc34bae4f7f8"
+              },
+              "bodyPart": {
+                "type": "string",
+                "description": "The part of the body for which the exercise is intended",
+                "example": "chest"
+              },
+              "equipment": {
+                "type": "string",
+                "description": "Equipment is necessary to perform the exercise",
+                "example": "leverage machine"
+              },
+              "gifUrl": {
+                "type": "string",
+                "description": "Illustration of how to perform the exercise",
+                "example": "https://ftp.goit.study/img/power-pulse/gifs/0009.gif"
+              },
+              "name": {
+                "type": "string",
+                "description": "Exercise name",
+                "example": "assisted chest dip (kneeling)"
+              },
+              "target": {
+                "type": "string",
+                "description": "The muscle for which the exercise is intended",
+                "example": "pectorals"
+              },
+              "burnedCalories": {
+                "type": "integer",
+                "description": "Amount of calories that were burnt",
+                "example": 329
+              },
+              "time": {
+                "type": "number",
+                "description": "The minimum amount of time to perform the exercise",
+                "example": 3
+              }
+            }
+          }
+        }
+                
+        }
     }
-  }
-}
+ }
