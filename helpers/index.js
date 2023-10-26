@@ -4,6 +4,7 @@ const createError = require("./createError");
 const ctrlWrapper = require("./ctrlWrapper");
 const errorType = require("./errorType");
 const handleMongooseError = require("./handleMongooseError");
+const formatDiary = require('./formatDiary')
 
 module.exports = {
   calculateBMR,
@@ -12,4 +13,5 @@ module.exports = {
   ctrlWrapper,
   errorType,
   handleMongooseError,
+  formatDiary
 };

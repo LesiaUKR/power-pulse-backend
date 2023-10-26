@@ -413,7 +413,7 @@
             "name": "date",
             "required": true,
             "type": "string",
-            "example": "23.10.2023",
+            "example": "27/10/2023",
             "description": "Date for which to get diary"
           }
         ],
@@ -787,7 +787,7 @@
           "date": {
             "type": "string",
             "description": "Date when user ate the product",
-            "example": "23.10.2023"
+            "example": "27/10/2023"
           }
         }
       },
@@ -824,7 +824,7 @@
           "date": {
             "type": "string",
             "description": "Date when user did the exercise",
-            "example": "23.10.2023"
+            "example": "27/10/2023"
           }
         }
       }

@@ -16,7 +16,7 @@ const diaryProductSchema = new Schema(
     },
     date: {
       type: String,
-      match: /^\d{2}\.\d{2}\.\d{4}$/,
+      match: /^\d{2}\/\d{2}\/\d{4}$/,
       required: true,
     },
     calories: {
@@ -43,7 +43,7 @@ const diaryProductJoiSchema = Joi.object({
 
 const delProductSchema = Joi.object({
   productId: Joi.string().alphanum().required(),
-  date: Joi.string().regex(/^\d{2}\.\d{2}\.\d{4}$/).required(),
+  date: Joi.string().regex(/^\d{2}\/\d{2}\/\d{4}$/).required(),
 })
 
 const schemas = {

@@ -4,12 +4,16 @@ const { DiaryProducts } = require('../models/diaryProduct');
 const { Product } = require('../models/products');
 const { DiaryExercises } = require('../models/diaryExercise');
 const { Exercises } = require('../models/exercise');
+const formatDate = require('../helpers/formatDiary');
 
 const addProduct = async (req, res) => {
     const owner = req.user;
     const { bodyParams: { blood } } = await Users.findById(req.user);
+    if (!blood) {
+        throw createError('BAD_REQUEST', "Specify your blood type")
+    }
     const { productId } = req.body
-    const date = new Date().toLocaleDateString()
+    const date = formatDate(new Date())
     let originalProduct = await DiaryProducts.findOne({ owner, date, productId }).populate('productId', "category title groupBloodNotAllowed")
     if (!originalProduct) {
         originalProduct = await Product.findById(productId)
@@ -42,7 +46,7 @@ const deleteProduct = async (req, res) => {
 const addExercise = async (req, res) => {
     const owner = req.user;
     const { exerciseId } = req.body
-    const date = new Date().toLocaleDateString()
+    const date = formatDate(new Date())
     let originalExercise = await DiaryExercises.findOne({ owner, date, exerciseId }).populate('exerciseId', 'bodyPart equipment name target');
 
     if (!originalExercise) {
