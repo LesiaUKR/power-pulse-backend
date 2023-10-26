@@ -1,7 +1,7 @@
 const Joi = require("joi");
 
 const schemaBMR = Joi.object({
-    name: Joi.string().min(6).max(15),
+    name: Joi.string().min(2).max(15),
     height: Joi.number().min(150).required(),
     currentWeight: Joi.number().min(35).required(),
     desiredWeight: Joi.number().min(35).required(),

@@ -52,7 +52,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/usersSchema"
+                  "$ref": "#/components/schemas/usersSchemaRes"
                 }
               }
             }
@@ -90,7 +90,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/loginSchema"
+                  "$ref": "#/components/schemas/loginSchemaRes"
                 }
               }
             }
@@ -135,7 +135,81 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "OK, login success"
+            "description": "OK, login success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message":{
+                      "type":"string",
+                      "example":"OK, login success"
+                    },
+                    "ResponseBody": {
+                      "type": "object",
+                      "properties": {
+                        "bodyParams": {
+                        "type": "object",
+                        "properties": {
+                          "height": {
+                            "type": "integer",
+                            "example": "180"
+                          },
+                          "currentWeight":{
+                            "type": "integer",
+                            "example": "80"
+                          },
+                          "desiredWeight":{
+                            "type": "integer",
+                            "example": "75"
+                          },
+                          "birthday":{
+                            "type":"date",
+                            "example": "2000-09-07"
+                          },
+                          "blood":{
+                            "type": "integer",
+                            "example": "2"
+                          },
+                          "sex":{
+                            "type":"string",
+                            "example": "male"
+                          },
+                          "levelActivity":{
+                            "type":"integer",
+                            "example":"2"
+                          }
+                        }
+                        },
+                      "_id": {
+                      "type": "string",
+                      "example": "653a8200a6580962b85f536a"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Serg Oz"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "ozeran16@gmail.com"
+                    },
+                    "avatarUrl": {
+                      "type": "string",
+                      "example": "http://res.cloudinary.com/dtq5o3uun/image/upload/v1698264655/gemxxystvo5fnonpvpat.jpg"
+                    },
+                    "token": {
+                      "type": "string",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTNhODIwMGE2NTgwOTYyYjg1ZjUzNmEiLCJpYXQiOjE2OTgzMzMxODQsImV4cCI6MTY5ODQxOTU4NH0.5APsr59IQDHTRsU75HDgttmYm9991_irwM9HO7Y_7FQ"
+                    }
+                      }
+                      
+                    }
+                    
+                    
+                  }
+                }
+              }
+            }
           },
           "401": {
             "description": "Not authorized",
@@ -393,6 +467,35 @@
           }
         }
       }
+    },
+    "/diary": {
+      "get": {
+        "tags": ["Diary"],
+        "summary": "Get diary by user and date",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "required": true,
+            "type": "string",
+            "example": "23.10.2023",
+            "description": "Date for which to get diary"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
     }
   },
 
@@ -426,6 +529,31 @@
             "example": "1234567"
           }
         }
+      },"usersSchemaRes": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "message",
+            "example": "User created"
+          },
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "User"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email",
+            "example": "user@mail.com"
+          },
+          "token": {
+            "type": "string",
+            "description": "User's token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTNhODIwMGE2NTgwOTYyYjg1ZjUzNmEiLCJpYXQiOjE2OTgzMzMxODQsImV4cCI6MTY5ODQxOTU4NH0.5APsr59IQDHTRsU75HDgttmYm9991_irwM9HO7Y_7FQ"
+          }
+        }
       },
       "loginSchema": {
         "type": "object",
@@ -441,6 +569,27 @@
             "type": "string",
             "description": "User's password",
             "example": "1234567"
+          }
+        }
+      },
+      "loginSchemaRes": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "User's token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTNhODIwMGE2NTgwOTYyYjg1ZjUzNmEiLCJpYXQiOjE2OTgzMzMxODQsImV4cCI6MTY5ODQxOTU4NH0.5APsr59IQDHTRsU75HDgttmYm9991_irwM9HO7Y_7FQ"
+          },
+          "user":{
+              "type":"object",
+              "properties":{
+                "email":{
+                  "type": "string",
+                  "description": "User's email",
+                  "format": "email",
+                  "example": "user@mail.com"
+                }
+            }
           }
         }
       },
