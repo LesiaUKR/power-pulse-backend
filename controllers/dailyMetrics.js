@@ -2,8 +2,14 @@ const { createError } = require("../helpers");
 const Users = require("../models/users");
 
 const getBMR = async (req, res, next) => {
+    let updBodyParams;
+    const { name } = req.body;
+        if (name) {
+            delete req.body.name;
+            updBodyParams = {name, bodyParams: { ...req.body }}
+    } else updBodyParams = { bodyParams: { ...req.body } }
     try {
-            const updBodyParams = {bodyParams: { ...req.body }}
+        
             const data = await Users.findByIdAndUpdate(req.user, { ...updBodyParams });  
             res.status(200);
             res.json({

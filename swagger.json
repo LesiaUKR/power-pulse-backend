@@ -20,7 +20,10 @@
       "name": "Auth",
       "description": "Authorization endpoint"
     },
-
+    {
+      "name": "Products",
+      "description": "Products endpoints"
+    },
     {
       "name": "Exercises",
       "description": "Exercises endpoints"
@@ -263,6 +266,56 @@
     }
   }
 },
+    "/products": {
+      "get": {
+        "tags": ["Products"],
+        "summary": "Get all or filtred products",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "search",
+            "required": false,
+            "type": "string",
+            "description": "Search products by word"
+          },
+          {
+            "in": "query",
+            "name": "category",
+            "required": false,
+            "type": "string",
+            "description": "Search products by categories"
+          },
+          {
+            "in": "query",
+            "name": "recommended",
+            "required": false,
+            "type": "string",
+            "description": "Search recommended products by blood type"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/productsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {}
+          }
+        }
+      }
+    },
     "/exercises": {
       "get": {
         "tags": ["Exercises"],
@@ -397,6 +450,11 @@
       "usersUpdateSchema": {
         "type": "object",
         "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name",
+            "example": "User"
+          },
           "height": {
             "type": "integer",
             "description": "User's height",
@@ -434,7 +492,6 @@
           }
         }
       },
-<<<<<<< HEAD
       "usersChangeData": {
         "type": "object",
         "properties": {
@@ -442,6 +499,44 @@
             "type": "string",
             "description": "Update user's name",
             "example": "Name Surname"
+          }
+        }
+      },
+            "productsResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_id": {
+              "type": "string",
+              "description": "Products id",
+              "example": "64f2458d6f67bc34bae4f7f8"
+            },
+            "weight": {
+              "type": "integer",
+              "description": "Product weight, grams",
+              "example": "100"
+            },
+            "calories": {
+              "type": "integer",
+              "description": "Calorie content of 100 grams of product",
+              "example": "240"
+            },
+            "category": {
+              "type": "string",
+              "description": "Product category",
+              "example": "fish"
+            },
+            "title": {
+              "type": "string",
+              "description": "Product name",
+              "example": "Danbo cheese"
+            },
+            "groupBloodNotAllowed": {
+              "type": "object",
+              "description": "Recommend products by blood type",
+              "example": "{'1': true, '2': true, '3':false, '4': true}"
+            }
           }
         }
       },
@@ -489,54 +584,6 @@
               "type": "number",
               "description": "The minimum amount of time to perform the exercise",
               "example": 3
-=======
-      
-        "allExercisesResponse": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "_id": {
-                "type": "string",
-                "description": "Exercises id",
-                "example": "64f2458d6f67bc34bae4f7f8"
-              },
-              "bodyPart": {
-                "type": "string",
-                "description": "The part of the body for which the exercise is intended",
-                "example": "chest"
-              },
-              "equipment": {
-                "type": "string",
-                "description": "Equipment is necessary to perform the exercise",
-                "example": "leverage machine"
-              },
-              "gifUrl": {
-                "type": "string",
-                "description": "Illustration of how to perform the exercise",
-                "example": "https://ftp.goit.study/img/power-pulse/gifs/0009.gif"
-              },
-              "name": {
-                "type": "string",
-                "description": "Exercise name",
-                "example": "assisted chest dip (kneeling)"
-              },
-              "target": {
-                "type": "string",
-                "description": "The muscle for which the exercise is intended",
-                "example": "pectorals"
-              },
-              "burnedCalories": {
-                "type": "integer",
-                "description": "Amount of calories that were burnt",
-                "example": 329
-              },
-              "time": {
-                "type": "number",
-                "description": "The minimum amount of time to perform the exercise",
-                "example": 3
-              }
->>>>>>> main
             }
           }
         }
