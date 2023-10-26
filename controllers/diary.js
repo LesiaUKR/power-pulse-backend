@@ -42,7 +42,6 @@ const addExercise = async (req, res) => {
     const owner = req.user;
     const { exerciseId, date = new Date().toLocaleDateString() } = req.body
     let originalExercise = await DiaryExercises.findOne({ owner, date, exerciseId }).populate('exerciseId', 'bodyPart equipment name target');
-    console.log(originalExercise)
 
     if (!originalExercise) {
         originalExercise = await Exercises.findById(exerciseId)
@@ -71,15 +70,12 @@ const deleteExercise = async (req, res) => {
 }
 
 const getDiary = async (req, res) => {
-    console.log("first")
     const owner = req.user;
     const { date } = req.query;
-    console.log(req)
     if (Object.keys(req.query).length < 1) {
         throw createError("NOT_FOUND", 'Enter the date!');
     }
     const eatenProducts = await DiaryProducts.find({ owner, date })
-    console.log(eatenProducts)
     const doneExercises = await DiaryExercises.find({ owner, date })
 
     const consumedCalories = eatenProducts.map((product) => product.calories).reduce((prev, val) => prev += val, 0)

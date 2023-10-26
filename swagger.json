@@ -27,6 +27,10 @@
     {
       "name": "Exercises",
       "description": "Exercises endpoints"
+    },
+    {
+      "name": "Diary",
+      "description": "Diary endpoints"
     }
   ],
   "paths": {
@@ -184,88 +188,85 @@
       }
     },
     "/users/changeData": {
-  "patch": {
-    "tags": ["Auth"],
-    "summary": "user update data",
-    "consumes": ["multipart/form-data"],
-    "security": [
-      {
-        "Bearer": []
-      }
-    ],
-    "parameters": [
-      {
-        "name": "name",
-        "in": "query",
-        "description": "New user`s name",
-        "required": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      {
-        "name": "fileName",
-        "in": "formData",
-        "description": "The file to upload",
-        "required": false,
-        "type": "file"
-      }
-    ],
-    "requestBody": {
-      "description": "Data to update user's information",
-      "required": true,
-      "content": {
-        "application/json": {
-          "schema": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
+      "patch": {
+        "tags": ["Auth"],
+        "summary": "user update data",
+        "consumes": ["multipart/form-data"],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "New user`s name",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "formData",
+            "description": "The file to upload",
+            "required": false,
+            "type": "file"
+          }
+        ],
+        "requestBody": {
+          "description": "Data to update user's information",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
               }
-              
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Contact updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Contact updated"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Update"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "avatarUrl": {
+                      "type": "string",
+                      "example": "http://res.cloudinary.com/dtq5o3uun/image/upload/v1698264655/gemxxystvo5fnonpvpat.jpg"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Name Surname"
+                    }
+                  }
+                }
+              }
             }
           }
         }
       }
     },
-    "responses": {
-      "200": {
-        "description": "Contact updated",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Contact updated"
-                },
-                "status": {
-                  "type": "string",
-                  "example": "Update"
-                },
-                "code": {
-                  "type": "integer",
-                  "example": 200
-                },
-                "avatarUrl": {
-                  "type": "string",
-                  "example": "http://res.cloudinary.com/dtq5o3uun/image/upload/v1698264655/gemxxystvo5fnonpvpat.jpg"
-                },
-                "name": {
-                  "type": "string",
-                  "example": "Name Surname"
-                }
-                
-              }
-            }
-          }
-        }
-      }
-      
-    }
-  }
-},
     "/products": {
       "get": {
         "tags": ["Products"],
@@ -396,6 +397,171 @@
           }
         }
       }
+    },
+    "/diary": {
+      "get": {
+        "tags": ["Diary"],
+        "summary": "Get diary by user and date",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "date",
+            "required": true,
+            "type": "string",
+            "example": "23.10.2023",
+            "description": "Date for which to get diary"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/diary/addproduct": {
+      "post": {
+        "tags": ["Diary"],
+        "summary": "Add eaten product to diary",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "description": "Eaten product object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/addProductSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "descroption": "Not found"
+          }
+        }
+      }
+    },
+    "/diary/deleteproduct": {
+      "delete": {
+        "tags": ["Diary"],
+        "summary": "Delete product from diary",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "description": "Product to delete",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/deleteProductSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "descroption": "Not found"
+          }
+        }
+      }
+    },
+    "/diary/addexercise": {
+      "post": {
+        "tags": ["Diary"],
+        "summary": "Add exercise to diary",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "description": "Exercise object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/addExerciseSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "descroption": "Not found"
+          }
+        }
+      }
+    },
+    "/diary/deleteexercise": {
+      "delete": {
+        "tags": ["Diary"],
+        "summary": "Delete exercise from diary",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "description": "Exercise to delete",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/deleteExerciseSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "descroption": "Not found"
+          }
+        }
+      }
     }
   },
 
@@ -502,7 +668,7 @@
           }
         }
       },
-            "productsResponse": {
+      "productsResponse": {
         "type": "array",
         "items": {
           "type": "object",
@@ -585,6 +751,90 @@
               "description": "The minimum amount of time to perform the exercise",
               "example": 3
             }
+          }
+        }
+      },
+      "addProductSchema": {
+        "type": "object",
+        "required": ["productId", "calories", "amount"],
+        "properties": {
+          "productId": {
+            "type": "string",
+            "description": "Eaten product id",
+            "example": "5d51694902b2373622ff5b8d"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date when user ate the product",
+            "example": "23.10.2023"
+          },
+          "calories": {
+            "type": "number",
+            "description": "Consumed calories",
+            "example": 562
+          },
+          "amount": {
+            "type": "number",
+            "description": "Amount of eaten product",
+            "example": 200
+          }
+        }
+      },
+      "deleteProductSchema": {
+        "type": "object",
+        "required": ["productId", "date"],
+        "properties": {
+          "productId": {
+            "type": "string",
+            "description": "Eaten product id",
+            "example": "5d51694902b2373622ff5b8d"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date when user ate the product",
+            "example": "23.10.2023"
+          }
+        }
+      },
+      "addExerciseSchema": {
+        "type": "object",
+        "required": ["exerciseId", "time", "burnedCalories"],
+        "properties": {
+          "exerciseId": {
+            "type": "string",
+            "description": "Done exercise id",
+            "example": "64f2458d6f67bc34bae4f819"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date when user ate the product",
+            "example": "23.10.2023"
+          },
+          "time": {
+            "type": "number",
+            "description": "Time the exercise was done for",
+            "example": 6
+          },
+          "burnedCalories": {
+            "type": "number",
+            "description": "Amount of calories burnt by doing exercise",
+            "example": 670
+          }
+        }
+      },
+      "deleteExerciseSchema": {
+        "type": "object",
+        "required": ["exerciseId", "date"],
+        "properties": {
+          "exerciseId": {
+            "type": "string",
+            "description": "Done exercise id",
+            "example": "64f2458d6f67bc34bae4f819"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date when user did the exercise",
+            "example": "23.10.2023"
           }
         }
       }
