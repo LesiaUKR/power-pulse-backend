@@ -184,88 +184,85 @@
       }
     },
     "/users/changeData": {
-  "patch": {
-    "tags": ["Auth"],
-    "summary": "user update data",
-    "consumes": ["multipart/form-data"],
-    "security": [
-      {
-        "Bearer": []
-      }
-    ],
-    "parameters": [
-      {
-        "name": "name",
-        "in": "query",
-        "description": "New user`s name",
-        "required": false,
-        "schema": {
-          "type": "string"
-        }
-      },
-      {
-        "name": "fileName",
-        "in": "formData",
-        "description": "The file to upload",
-        "required": false,
-        "type": "file"
-      }
-    ],
-    "requestBody": {
-      "description": "Data to update user's information",
-      "required": true,
-      "content": {
-        "application/json": {
-          "schema": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
+      "patch": {
+        "tags": ["Auth"],
+        "summary": "user update data",
+        "consumes": ["multipart/form-data"],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "New user`s name",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fileName",
+            "in": "formData",
+            "description": "The file to upload",
+            "required": false,
+            "type": "file"
+          }
+        ],
+        "requestBody": {
+          "description": "Data to update user's information",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
               }
-              
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Contact updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Contact updated"
+                    },
+                    "status": {
+                      "type": "string",
+                      "example": "Update"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "example": 200
+                    },
+                    "avatarUrl": {
+                      "type": "string",
+                      "example": "http://res.cloudinary.com/dtq5o3uun/image/upload/v1698264655/gemxxystvo5fnonpvpat.jpg"
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "Name Surname"
+                    }
+                  }
+                }
+              }
             }
           }
         }
       }
     },
-    "responses": {
-      "200": {
-        "description": "Contact updated",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "example": "Contact updated"
-                },
-                "status": {
-                  "type": "string",
-                  "example": "Update"
-                },
-                "code": {
-                  "type": "integer",
-                  "example": 200
-                },
-                "avatarUrl": {
-                  "type": "string",
-                  "example": "http://res.cloudinary.com/dtq5o3uun/image/upload/v1698264655/gemxxystvo5fnonpvpat.jpg"
-                },
-                "name": {
-                  "type": "string",
-                  "example": "Name Surname"
-                }
-                
-              }
-            }
-          }
-        }
-      }
-      
-    }
-  }
-},
     "/products": {
       "get": {
         "tags": ["Products"],
@@ -502,7 +499,7 @@
           }
         }
       },
-            "productsResponse": {
+      "productsResponse": {
         "type": "array",
         "items": {
           "type": "object",

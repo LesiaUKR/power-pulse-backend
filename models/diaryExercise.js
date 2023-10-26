@@ -34,7 +34,6 @@ diaryExerciseSchema.post('save', handleMongooseError);
 
 const diaryExerciseJoiSchema = Joi.object({
 	exerciseId: Joi.string().required(),
-	date: Joi.string().regex(/^\d{2}\.\d{2}\.\d{4}$/),
 	time: Joi.number().min(1).required(),
 	burnedCalories: Joi.number().min(1)
 });
