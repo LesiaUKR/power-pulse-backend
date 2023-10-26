@@ -275,14 +275,7 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/allExercisesResponse"
-                }
-              }
-            }
+            "description": "Success"
           },
           "400": {
             "description": "Bad request",

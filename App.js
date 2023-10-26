@@ -5,12 +5,8 @@ require("dotenv").config();
 
 const loginRouter = require("./routes/auth/auth");
 const productsRouter = require("./routes/products/products");
-<<<<<<< HEAD
 const exercisesRouter = require("./routes/exercises");
-=======
-const exercisesRouter = require('./routes/exercises');
 const diaryRouter = require("./routes/diary");
->>>>>>> main
 
 const app = express();
 
