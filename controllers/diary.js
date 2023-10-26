@@ -8,7 +8,8 @@ const { Exercises } = require('../models/exercise');
 const addProduct = async (req, res) => {
     const owner = req.user;
     const { bodyParams: { blood } } = await Users.findById(req.user);
-    const { productId, date = new Date().toLocaleDateString() } = req.body
+    const { productId } = req.body
+    const date = new Date().toLocaleDateString()
     let originalProduct = await DiaryProducts.findOne({ owner, date, productId }).populate('productId', "category title groupBloodNotAllowed")
     if (!originalProduct) {
         originalProduct = await Product.findById(productId)
@@ -40,7 +41,8 @@ const deleteProduct = async (req, res) => {
 
 const addExercise = async (req, res) => {
     const owner = req.user;
-    const { exerciseId, date = new Date().toLocaleDateString() } = req.body
+    const { exerciseId } = req.body
+    const date = new Date().toLocaleDateString()
     let originalExercise = await DiaryExercises.findOne({ owner, date, exerciseId }).populate('exerciseId', 'bodyPart equipment name target');
 
     if (!originalExercise) {

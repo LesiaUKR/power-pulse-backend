@@ -37,7 +37,6 @@ diaryProductSchema.post('save', handleMongooseError);
 
 const diaryProductJoiSchema = Joi.object({
   productId: Joi.string().required(),
-  date: Joi.string().regex(/^\d{2}\.\d{2}\.\d{4}$/),
   calories: Joi.number().min(1).required(),
   amount: Joi.number().min(1).required(),
 });
