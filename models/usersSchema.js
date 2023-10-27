@@ -59,6 +59,11 @@ const UserSchema = new mongoose.Schema({
             type: Number,
             default: 0,
             
+        },
+        dailyNormOfSport: {
+            type: Number,
+            default: 0,
+            
         }
     }
 }, { versionKey: false, timestamps: true })
