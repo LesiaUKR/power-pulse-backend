@@ -8,9 +8,7 @@
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "servers": [
-    {
-      "url": "https://power-pulse-rh13.onrender.com/api"
-    },
+   
     {
       "url": "http://localhost:3001/api"
     }

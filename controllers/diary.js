@@ -13,8 +13,7 @@ const addProduct = async (req, res) => {
         throw createError('BAD_REQUEST', "Specify your blood type")
     }
     const { productId } = req.body
-    // const date = formatDate(new Date())
-    const date = new Date();
+    const date = formatDate(new Date())
     let originalProduct = await DiaryProducts.findOne({ owner, date, productId }).populate('productId', "category title groupBloodNotAllowed")
     if (!originalProduct) {
         originalProduct = await Product.findById(productId)
