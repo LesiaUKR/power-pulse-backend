@@ -1,15 +1,15 @@
 const Users = require("../../models/users");
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
-const gravatar = require('gravatar');
+// const gravatar = require('gravatar');
 const createError = require("../../helpers/createError");
 const { JWT_SECRET_KEY } = process.env;
 const singup = async (req, res, next) => {
     const { name, email, password: pass } = req.body;
-    const avatarUrl = gravatar.url(email);
+    // const avatarUrl = gravatar.url(email);
     const password = await bcrypt.hash(pass, 10);
     try {
-        const user = await Users.create({ ...req.body, avatarUrl });
+        const user = await Users.create({ ...req.body, avatarUrl: '' });
         const {_id} = user;
         const token = jwt.sign({_id}, JWT_SECRET_KEY, { expiresIn: '1d' });
         const updateUser = await Users.findByIdAndUpdate(_id, {...req.body, password, token});
