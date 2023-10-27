@@ -182,6 +182,16 @@
                             "levelActivity": {
                               "type": "integer",
                               "example": "2"
+                            },
+                            "dailyNormOfSport": {
+                              "type": "number",
+                              "description": "User's daily calorie intake",
+                              "example": "110"
+                            },
+                            "dailyIntakeCalories": {
+                              "type": "number",
+                              "description": "User's daily calorie intake",
+                              "example": "6036"
                             }
                           }
                         },
@@ -776,11 +786,6 @@
             "type": "integer",
             "description": "User's levelActivity",
             "example": "2"
-          },
-          "dailyNormOfSport": {
-            "type": "number",
-            "description": "User's daily calorie intake",
-            "example": "6036.25"
           }
         }
       },
