@@ -27,6 +27,10 @@
     {
       "name": "Exercises",
       "description": "Exercises endpoints"
+    },
+    {
+      "name": "Diary",
+      "description": "Diary endpoints"
     }
   ],
   "paths": {
@@ -52,7 +56,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/usersSchemaRes"
+                  "$ref": "#/components/schemas/usersSchema"
                 }
               }
             }
@@ -90,7 +94,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/loginSchemaRes"
+                  "$ref": "#/components/schemas/loginSchema"
                 }
               }
             }
@@ -135,81 +139,7 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "OK, login success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message":{
-                      "type":"string",
-                      "example":"OK, login success"
-                    },
-                    "ResponseBody": {
-                      "type": "object",
-                      "properties": {
-                        "bodyParams": {
-                        "type": "object",
-                        "properties": {
-                          "height": {
-                            "type": "integer",
-                            "example": "180"
-                          },
-                          "currentWeight":{
-                            "type": "integer",
-                            "example": "80"
-                          },
-                          "desiredWeight":{
-                            "type": "integer",
-                            "example": "75"
-                          },
-                          "birthday":{
-                            "type":"date",
-                            "example": "2000-09-07"
-                          },
-                          "blood":{
-                            "type": "integer",
-                            "example": "2"
-                          },
-                          "sex":{
-                            "type":"string",
-                            "example": "male"
-                          },
-                          "levelActivity":{
-                            "type":"integer",
-                            "example":"2"
-                          }
-                        }
-                        },
-                      "_id": {
-                      "type": "string",
-                      "example": "653a8200a6580962b85f536a"
-                    },
-                    "name": {
-                      "type": "string",
-                      "example": "Serg Oz"
-                    },
-                    "email": {
-                      "type": "string",
-                      "example": "ozeran16@gmail.com"
-                    },
-                    "avatarUrl": {
-                      "type": "string",
-                      "example": "http://res.cloudinary.com/dtq5o3uun/image/upload/v1698264655/gemxxystvo5fnonpvpat.jpg"
-                    },
-                    "token": {
-                      "type": "string",
-                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTNhODIwMGE2NTgwOTYyYjg1ZjUzNmEiLCJpYXQiOjE2OTgzMzMxODQsImV4cCI6MTY5ODQxOTU4NH0.5APsr59IQDHTRsU75HDgttmYm9991_irwM9HO7Y_7FQ"
-                    }
-                      }
-                      
-                    }
-                    
-                    
-                  }
-                }
-              }
-            }
+            "description": "OK, login success"
           },
           "401": {
             "description": "Not authorized",
@@ -483,7 +413,7 @@
             "name": "date",
             "required": true,
             "type": "string",
-            "example": "23.10.2023",
+            "example": "27/10/2023",
             "description": "Date for which to get diary"
           }
         ],
@@ -493,6 +423,142 @@
           },
           "404": {
             "description": "Not found"
+          }
+        }
+      }
+    },
+    "/diary/addproduct": {
+      "post": {
+        "tags": ["Diary"],
+        "summary": "Add eaten product to diary",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "description": "Eaten product object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/addProductSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "descroption": "Not found"
+          }
+        }
+      }
+    },
+    "/diary/deleteproduct": {
+      "delete": {
+        "tags": ["Diary"],
+        "summary": "Delete product from diary",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "description": "Product to delete",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/deleteProductSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "descroption": "Not found"
+          }
+        }
+      }
+    },
+    "/diary/addexercise": {
+      "post": {
+        "tags": ["Diary"],
+        "summary": "Add exercise to diary",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "description": "Exercise object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/addExerciseSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "descroption": "Not found"
+          }
+        }
+      }
+    },
+    "/diary/deleteexercise": {
+      "delete": {
+        "tags": ["Diary"],
+        "summary": "Delete exercise from diary",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "description": "Exercise to delete",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/deleteExerciseSchema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "404": {
+            "descroption": "Not found"
           }
         }
       }
@@ -529,31 +595,6 @@
             "example": "1234567"
           }
         }
-      },"usersSchemaRes": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "description": "message",
-            "example": "User created"
-          },
-          "name": {
-            "type": "string",
-            "description": "User's name",
-            "example": "User"
-          },
-          "email": {
-            "type": "string",
-            "description": "User's email",
-            "format": "email",
-            "example": "user@mail.com"
-          },
-          "token": {
-            "type": "string",
-            "description": "User's token",
-            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTNhODIwMGE2NTgwOTYyYjg1ZjUzNmEiLCJpYXQiOjE2OTgzMzMxODQsImV4cCI6MTY5ODQxOTU4NH0.5APsr59IQDHTRsU75HDgttmYm9991_irwM9HO7Y_7FQ"
-          }
-        }
       },
       "loginSchema": {
         "type": "object",
@@ -569,27 +610,6 @@
             "type": "string",
             "description": "User's password",
             "example": "1234567"
-          }
-        }
-      },
-      "loginSchemaRes": {
-        "type": "object",
-        "properties": {
-          "token": {
-            "type": "string",
-            "description": "User's token",
-            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTNhODIwMGE2NTgwOTYyYjg1ZjUzNmEiLCJpYXQiOjE2OTgzMzMxODQsImV4cCI6MTY5ODQxOTU4NH0.5APsr59IQDHTRsU75HDgttmYm9991_irwM9HO7Y_7FQ"
-          },
-          "user":{
-              "type":"object",
-              "properties":{
-                "email":{
-                  "type": "string",
-                  "description": "User's email",
-                  "format": "email",
-                  "example": "user@mail.com"
-                }
-            }
           }
         }
       },
@@ -731,6 +751,80 @@
               "description": "The minimum amount of time to perform the exercise",
               "example": 3
             }
+          }
+        }
+      },
+      "addProductSchema": {
+        "type": "object",
+        "required": ["productId", "calories", "amount"],
+        "properties": {
+          "productId": {
+            "type": "string",
+            "description": "Eaten product id",
+            "example": "5d51694902b2373622ff5b8d"
+          },
+          "calories": {
+            "type": "number",
+            "description": "Consumed calories",
+            "example": 562
+          },
+          "amount": {
+            "type": "number",
+            "description": "Amount of eaten product",
+            "example": 200
+          }
+        }
+      },
+      "deleteProductSchema": {
+        "type": "object",
+        "required": ["productId", "date"],
+        "properties": {
+          "productId": {
+            "type": "string",
+            "description": "Eaten product id",
+            "example": "5d51694902b2373622ff5b8d"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date when user ate the product",
+            "example": "27/10/2023"
+          }
+        }
+      },
+      "addExerciseSchema": {
+        "type": "object",
+        "required": ["exerciseId", "time", "burnedCalories"],
+        "properties": {
+          "exerciseId": {
+            "type": "string",
+            "description": "Done exercise id",
+            "example": "64f2458d6f67bc34bae4f819"
+          },
+          "time": {
+            "type": "number",
+            "description": "Time the exercise was done for",
+            "example": 6
+          },
+          "burnedCalories": {
+            "type": "number",
+            "description": "Amount of calories burnt by doing exercise",
+            "example": 670
+          }
+        }
+      },
+      "deleteExerciseSchema": {
+        "type": "object",
+        "required": ["exerciseId", "date"],
+        "properties": {
+          "exerciseId": {
+            "type": "string",
+            "description": "Done exercise id",
+            "example": "64f2458d6f67bc34bae4f819"
+          },
+          "date": {
+            "type": "string",
+            "description": "Date when user did the exercise",
+            "example": "27/10/2023"
           }
         }
       }
