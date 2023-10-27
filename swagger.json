@@ -494,6 +494,9 @@
           },
           "404": {
             "description": "Not found"
+          },
+          "400" :{
+            "description": "Bad request"
           }
         }
       }

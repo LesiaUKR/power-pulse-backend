@@ -29,6 +29,10 @@ const diaryProductSchema = new Schema(
       required: true,
       min: 1,
     },
+    recommend: {
+      type: Boolean,
+      required: true
+    }
   },
   { versionKey: false}
 );
