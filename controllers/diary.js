@@ -35,8 +35,8 @@ const addProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
     const owner = req.user;
-    const { productId, date } = req.body
-    const productToDelete = await DiaryProducts.findOneAndDelete({ productId, date, owner })
+    const { productId: _id, date } = req.body
+    const productToDelete = await DiaryProducts.findOneAndDelete({ _id, date, owner })
     if (!productToDelete) {
         throw createError('NOT_FOUND')
     }
@@ -67,9 +67,9 @@ const addExercise = async (req, res) => {
 
 const deleteExercise = async (req, res) => {
     const owner = req.user;
-    const { exerciseId, date } = req.body
-    const exerciseToDelete = await DiaryExercises.findOneAndDelete({ exerciseId, date, owner })
-    if (!exerciseId) {
+    const { exerciseId: _id, date } = req.body
+    const exerciseToDelete = await DiaryExercises.findOneAndDelete({ _id, date, owner })
+    if (!exerciseToDelete) {
         throw createError('NOT_FOUND')
     }
     res.json(exerciseToDelete)
@@ -88,13 +88,13 @@ const getDiary = async (req, res) => {
     const burnedCalories = doneExercises.map((exercise) => exercise.burnedCalories).reduce((prev, val) => prev += val, 0)
     const sportTime = doneExercises.map((exercise) => exercise.time).reduce((prev, val) => prev += val, 0)
 
-        res.json({
-            eatenProducts,
-            doneExercises,
-            consumedCalories,
-            burnedCalories,
-            sportTime
-        })
+    res.json({
+        eatenProducts,
+        doneExercises,
+        consumedCalories,
+        burnedCalories,
+        sportTime
+    })
 }
 
 
