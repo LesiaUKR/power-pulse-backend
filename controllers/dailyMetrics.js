@@ -10,7 +10,8 @@ const dailyMetrics = async (req, res, next) => {
             updBodyParams = {name, bodyParams: { ...req.body, dailyIntakeCalories: dci }}
     } else updBodyParams = { bodyParams: { ...req.body, dailyIntakeCalories: dci } }
     try {
-        const data = await Users.findByIdAndUpdate(req.user, { ...updBodyParams });  
+        const user = await Users.findOne({ _id: req.user });
+        const data = await Users.findByIdAndUpdate(req.user, { ...user, ...updBodyParams });  
             res.status(200);
             res.json({
                 message: 'contact updated',
