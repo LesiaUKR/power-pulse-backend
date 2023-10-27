@@ -900,7 +900,7 @@
           "productId": {
             "type": "string",
             "description": "Eaten product id",
-            "example": "5d51694902b2373622ff5b8d"
+            "example": "653b9a6ef45eeee7ea255d37"
           },
           "date": {
             "type": "string",
@@ -937,7 +937,7 @@
           "exerciseId": {
             "type": "string",
             "description": "Done exercise id",
-            "example": "64f2458d6f67bc34bae4f819"
+            "example": "653bbee33804df4424a76b5a"
           },
           "date": {
             "type": "string",
