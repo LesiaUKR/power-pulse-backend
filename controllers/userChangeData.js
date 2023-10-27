@@ -39,8 +39,9 @@ const userChangeData = async (req, res, next) => {
             
         }
     } catch (err) {
-        delete resJson.avatarUrl
-        console.log(err);
+        delete resJson.avatarUrl;
+        next(createError('INTERNAL_SERVER_ERROR', err));
+        // console.log(err);
         
     }
     

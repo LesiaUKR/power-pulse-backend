@@ -1,16 +1,17 @@
-const { createError } = require("../helpers");
+const { createError, calculateBMR } = require("../helpers");
 const Users = require("../models/users");
 
-const getBMR = async (req, res, next) => {
+const dailyMetrics = async (req, res, next) => {
     let updBodyParams;
-    const { name } = req.body;
+    const { name, height, currentWeight, birthday, sex, levelActivity } = req.body;
+    const dci = calculateBMR(currentWeight, height, birthday, levelActivity, sex);
         if (name) {
             delete req.body.name;
-            updBodyParams = {name, bodyParams: { ...req.body }}
-    } else updBodyParams = { bodyParams: { ...req.body } }
+            updBodyParams = {name, bodyParams: { ...req.body, dailyNormOfSport: dci }}
+    } else updBodyParams = { bodyParams: { ...req.body, dailyNormOfSport: dci } }
     try {
         
-            const data = await Users.findByIdAndUpdate(req.user, { ...updBodyParams });  
+        const data = await Users.findByIdAndUpdate(req.user, { ...updBodyParams });  
             res.status(200);
             res.json({
                 message: 'contact updated',
@@ -24,4 +25,4 @@ const getBMR = async (req, res, next) => {
         }
     
 }
-module.exports = getBMR
+module.exports = dailyMetrics;
