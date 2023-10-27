@@ -27,8 +27,9 @@ const addProduct = async (req, res) => {
         ...req.body,
         owner,
         date,
+        recommend
     })
-    const newProduct = { ...addedProduct['_doc'], category, title, recommend }
+    const newProduct = { ...addedProduct['_doc'], category, title }
 
     res.status(201).json(newProduct)
 }
@@ -77,12 +78,16 @@ const deleteExercise = async (req, res) => {
 
 const getDiary = async (req, res) => {
     const owner = req.user;
+    const { bodyParams: { blood } } = await Users.findById(owner);
+    if (!blood) {
+        throw createError('BAD_REQUEST', "Specify your blood type")
+    }
     const { date } = req.query;
     if (Object.keys(req.query).length < 1) {
         throw createError("NOT_FOUND", 'Enter the date!');
     }
-    const eatenProducts = await DiaryProducts.find({ owner, date })
-    const doneExercises = await DiaryExercises.find({ owner, date })
+    const eatenProducts = await DiaryProducts.find({ owner, date }).populate('productId', "category title")
+    const doneExercises = await DiaryExercises.find({ owner, date }).populate('exerciseId', 'bodyPart equipment name target')
 
     const consumedCalories = eatenProducts.map((product) => product.calories).reduce((prev, val) => prev += val, 0)
     const burnedCalories = doneExercises.map((exercise) => exercise.burnedCalories).reduce((prev, val) => prev += val, 0)
