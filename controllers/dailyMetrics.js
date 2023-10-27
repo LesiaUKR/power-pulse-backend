@@ -4,7 +4,7 @@ const Users = require("../models/users");
 const dailyMetrics = async (req, res, next) => {
     let updBodyParams;
     const { name, height, currentWeight, birthday, sex, levelActivity } = req.body;
-    const dci = calculateBMR(currentWeight, height, birthday, levelActivity, sex);
+    const dci = Math.floor(calculateBMR(currentWeight, height, birthday, levelActivity, sex));
         if (name) {
             delete req.body.name;
             updBodyParams = {name, bodyParams: { ...req.body, dailyNormOfSport: dci }}
