@@ -16,9 +16,11 @@ const singin = async (req, res, next) => {
                 const updateUser = await Users.findByIdAndUpdate(user._id, { token });
                 res.status(200);
                 res.json({
-                    message: "login success",
-                    email,
-                    token
+                    token: user.token,
+                    user: {
+                        email: user.email,
+                    
+                    }
                 })
             } else {
                 res.status(200);
