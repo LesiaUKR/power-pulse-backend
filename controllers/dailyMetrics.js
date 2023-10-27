@@ -7,10 +7,9 @@ const dailyMetrics = async (req, res, next) => {
     const dci = Math.floor(calculateBMR(currentWeight, height, birthday, levelActivity, sex));
         if (name) {
             delete req.body.name;
-            updBodyParams = {name, bodyParams: { ...req.body, dailyNormOfSport: dci }}
-    } else updBodyParams = { bodyParams: { ...req.body, dailyNormOfSport: dci } }
+            updBodyParams = {name, bodyParams: { ...req.body, dailyIntakeCalories: dci }}
+    } else updBodyParams = { bodyParams: { ...req.body, dailyIntakeCalories: dci } }
     try {
-        
         const data = await Users.findByIdAndUpdate(req.user, { ...updBodyParams });  
             res.status(200);
             res.json({

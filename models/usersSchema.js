@@ -60,9 +60,14 @@ const UserSchema = new mongoose.Schema({
             default: 0,
             
         },
-        dailyNormOfSport: {
+        dailyIntakeCalories: {
             type: Number,
             default: 0,
+            
+        },
+        dailyNormOfSport: {
+            type: Number,
+            default: 110,
             
         }
     }
