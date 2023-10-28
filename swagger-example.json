@@ -8,7 +8,6 @@
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "servers": [
-   
     {
       "url": "http://localhost:3001/api"
     }
@@ -29,6 +28,10 @@
     {
       "name": "Diary",
       "description": "Diary endpoints"
+    },
+    {
+      "name": "Statistics",
+      "description": "Statistics endpoints"
     }
   ],
   "paths": {
@@ -557,6 +560,28 @@
           },
           "404": {
             "descroption": "Not found"
+          }
+        }
+      }
+    },
+    "/statistics": {
+      "get": {
+        "tags": ["Statistics"],
+        "summary": "Get API database statistics",
+
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not found"
           }
         }
       }
