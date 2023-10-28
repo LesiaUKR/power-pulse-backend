@@ -425,7 +425,7 @@
     "/exercises/bodyParts": {
       "get": {
         "tags": ["Exercises"],
-        "summary": "Get all exercises by body parts",
+        "summary": "Get all filters by body parts",
         "security": [
           {
             "Bearer": []
@@ -445,7 +445,7 @@
     "/exercises/equipment": {
       "get": {
         "tags": ["Exercises"],
-        "summary": "Get all exercises by equipment",
+        "summary": "Get all filters by equipment",
         "security": [
           {
             "Bearer": []
@@ -465,7 +465,7 @@
     "/exercises/muscles": {
       "get": {
         "tags": ["Exercises"],
-        "summary": "Get all exercises by muscles",
+        "summary": "Get all filters by muscles",
         "security": [
           {
             "Bearer": []
