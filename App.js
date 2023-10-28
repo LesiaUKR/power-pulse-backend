@@ -7,6 +7,7 @@ const loginRouter = require("./routes/auth/auth");
 const productsRouter = require("./routes/products/products");
 const exercisesRouter = require("./routes/exercises");
 const diaryRouter = require("./routes/diary");
+const statisticsRouter = require("./routes/statistics");
 
 const app = express();
 
@@ -25,13 +26,14 @@ app.use("/api", loginRouter);
 app.use("/api/products", productsRouter);
 app.use("/api/exercises", exercisesRouter);
 app.use("/api/diary", diaryRouter);
+app.use("/api/statistics", statisticsRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
 });
 
 app.use((err, req, res, next) => {
-  // console.log(err)
+  console.log(err);
   res.status(err.code).json({
     message: err.message || "",
     status: err.status,
