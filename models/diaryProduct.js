@@ -34,7 +34,7 @@ const diaryProductSchema = new Schema(
       required: true
     }
   },
-  { versionKey: false}
+  { versionKey: false }
 );
 
 diaryProductSchema.post('save', handleMongooseError);
@@ -47,7 +47,9 @@ const diaryProductJoiSchema = Joi.object({
 
 const delProductSchema = Joi.object({
   productId: Joi.string().alphanum().required(),
-  date: Joi.string().regex(/^\d{2}\/\d{2}\/\d{4}$/).required(),
+  date: Joi.string().regex(/^\d{2}\/\d{2}\/\d{4}$/).required().messages({
+    "string.pattern.base": "The date must be in format DD/MM/YYYY"
+  }),
 })
 
 const schemas = {

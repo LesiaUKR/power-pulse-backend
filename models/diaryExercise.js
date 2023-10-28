@@ -40,7 +40,9 @@ const diaryExerciseJoiSchema = Joi.object({
 
 const delExerciseSchema = Joi.object({
 	exerciseId: Joi.string().alphanum().required(),
-	date: Joi.string().regex(/^\d{2}\/\d{2}\/\d{4}$/).required(),
+	date: Joi.string().regex(/^\d{2}\/\d{2}\/\d{4}$/).required().messages({
+		"string.pattern.base": "The date must be in format DD/MM/YYYY"
+	}),
 })
 
 const schemas = {
