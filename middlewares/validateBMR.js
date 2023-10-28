@@ -1,5 +1,5 @@
-const validate = require("./validate");
+const validateSign = require("./validateSign");
 
-const validateBMR = validate('body');
+const validateBMR = validateSign('bmr');
 
 module.exports = validateBMR;
