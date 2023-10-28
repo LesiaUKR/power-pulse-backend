@@ -2,6 +2,8 @@ const Users = require("../../models/users");
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
 const createError = require("../../helpers/createError");
+const queryString = require('querystring');
+const url = require('url');
 const { JWT_SECRET_KEY } = process.env;
 
 
@@ -77,21 +79,26 @@ const logout = async (req, res, next) => {
 }
 
 const googleAuth = (req, res, next) => {
-    const strParams = queryString.stringify({
+    const strParams1 = queryString.stringify({
         client_id: process.env.GOOGLE_CLIENT_ID,
         redirect_uri: `${process.env.BASE_URL}/users/googleAuth-redirect`,
         scope: [
-            'https://www.googleapis.com/auth/userinfo.email', 
-            'https://www.googleapis.com/auth/userinfo.profile'
+            'https://www.googleapis.com/auth/userinfo.email'
+            
         ],
         response_type: "code",
         access_type: "offline",
         promt: "consent"
 
     })
-
+    strParams = `client_id=638098636819-b4k8c5agucv1l99gfavlb1dlergo9ihh.apps.googleusercontent.com
+&redirect_uri=http://localhost:3001/api/users/googleAuth-redirect
+&scope=https://www.googleapis.com/auth/userinfo.email
+&response_type=code
+&promt=consent`
+    console.log(strParams);
     return res.redirect(`https://accounts.google.com/o/oauth2/v2/auth?${strParams}`);
-    
+    // 'https://www.googleapis.com/auth/userinfo.profile'
 }
 
 const googleAuthRedirect = async (req, res) => {
@@ -143,5 +150,6 @@ module.exports = {
     singup,
     singin,
     logout,
-    current
+    current,
+    googleAuth
 }
