@@ -2,6 +2,8 @@ const Users = require("../../models/users");
 const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
 const createError = require("../../helpers/createError");
+const queryString = require('querystring');
+const url = require("url");
 const { JWT_SECRET_KEY } = process.env;
 
 
@@ -81,17 +83,17 @@ const googleAuth = (req, res, next) => {
         client_id: process.env.GOOGLE_CLIENT_ID,
         redirect_uri: `${process.env.BASE_URL}/users/googleAuth-redirect`,
         scope: [
-            'https://www.googleapis.com/auth/userinfo.email', 
-            'https://www.googleapis.com/auth/userinfo.profile'
+            'https://www.googleapis.com/auth/userinfo.email'
+            
         ],
         response_type: "code",
         access_type: "offline",
         promt: "consent"
-
+ 
     })
 
     return res.redirect(`https://accounts.google.com/o/oauth2/v2/auth?${strParams}`);
-    
+    // 'https://www.googleapis.com/auth/userinfo.profile'
 }
 
 const googleAuthRedirect = async (req, res) => {
@@ -143,5 +145,6 @@ module.exports = {
     singup,
     singin,
     logout,
-    current
+    current,
+    googleAuth
 }
