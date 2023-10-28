@@ -3,8 +3,8 @@ const logger = require("morgan");
 const cors = require("cors");
 require("dotenv").config();
 
-const loginRouter = require("./routes/auth/auth");
-const productsRouter = require("./routes/products/products");
+const loginRouter = require("./routes/auth");
+const productsRouter = require("./routes/products");
 const exercisesRouter = require("./routes/exercises");
 const diaryRouter = require("./routes/diary");
 const statisticsRouter = require("./routes/statistics");

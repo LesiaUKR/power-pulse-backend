@@ -1,6 +1,6 @@
-const { ctrlWrapper, createError, errorType } = require("../../helpers");
-const { Product } = require("../../models/products");
-const User = require("../../models/users");
+const { ctrlWrapper, createError, errorType } = require("../helpers");
+const { Product } = require("../models/products");
+const User = require("../models/users");
 
 const getProductsByFilter = async (req, res) => {
   const { category, search, recommended } = req.query;
