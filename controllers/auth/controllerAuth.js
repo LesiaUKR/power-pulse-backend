@@ -20,7 +20,8 @@ const singup = async (req, res, next) => {
             message: "User created",
             name,
             email,
-            token
+            token,
+            avatarUrl: user.avatarUrl
         })
         
     } catch (err) {
@@ -47,7 +48,9 @@ const singin = async (req, res, next) => {
                 res.json({
                     token,
                     user: {
+                        name: user.name,
                         email: user.email,
+                        avatarUrl: user.avatarUrl,
                         bodyParams: user.bodyParams
                     }
                 })
@@ -62,7 +65,9 @@ const singin = async (req, res, next) => {
                         res.json({
                             token,
                             user: {
+                                name: user.name,
                                 email: user.email,
+                                avatarUrl: user.avatarUrl,
                                 bodyParams: user.bodyParams
                             }
                         
@@ -71,8 +76,10 @@ const singin = async (req, res, next) => {
                         res.status(200);
                         res.json({
                         token: user.token,
-                        user: {
+                            user: {
+                            name: user.name,
                             email: user.email,
+                            avatarUrl: user.avatarUrl,
                             bodyParams: user.bodyParams
                         }
                 })  
