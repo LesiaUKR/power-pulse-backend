@@ -297,29 +297,26 @@
           "required": true,
           "content": {
             "multipart/form-data": {
-                     "schema": {
-                        "type": "object",
-                        "properties": {
-                           "avatar": {
-                              "type": "string",
-                              "format": "binary"
-                           }
-                           
-                        }
-                     }
-                  },
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "avatar": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            },
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
                   "name": {
-                              "type": "string"
-                          }
-                  
+                    "type": "string"
+                  }
                 }
               }
             }
-            
           }
         },
         "responses": {
@@ -355,7 +352,7 @@
               }
             }
           },
-          "500":{
+          "500": {
             "description": "Internal Server Error"
           }
         }
@@ -381,8 +378,31 @@
           {
             "in": "query",
             "name": "category",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "alcoholic drinks",
+                "berries",
+                "cereals",
+                "dairy",
+                "dried fruits",
+                "eggs",
+                "fish",
+                "flour",
+                "fruits",
+                "meat",
+                "mushrooms",
+                "nuts",
+                "oils and fats",
+                "poppy",
+                "sausage",
+                "seeds",
+                "sesame",
+                "soft drinks",
+                "vegetables and herbs"
+              ]
+            },
             "required": false,
-            "type": "string",
             "description": "Search products by categories"
           },
           {
@@ -518,7 +538,7 @@
           "404": {
             "description": "Not found"
           },
-          "400" :{
+          "400": {
             "description": "Bad request"
           }
         }
