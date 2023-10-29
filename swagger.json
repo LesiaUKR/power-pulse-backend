@@ -275,7 +275,7 @@
     "/users/changeData": {
       "patch": {
         "tags": ["Auth"],
-        "summary": "user update data",
+        "summary": "user update data, change avatar`s photo and name",
         "security": [
           {
             "Bearer": []
