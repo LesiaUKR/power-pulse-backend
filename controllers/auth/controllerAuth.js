@@ -48,7 +48,7 @@ const singin = async (req, res, next) => {
                     token,
                     user: {
                         email: user.email,
-                    
+                        bodyParams: user.bodyParams
                     }
                 })
             } else {
@@ -63,7 +63,7 @@ const singin = async (req, res, next) => {
                             token,
                             user: {
                                 email: user.email,
-                    
+                                bodyParams: user.bodyParams
                             }
                         
                 })
@@ -73,7 +73,7 @@ const singin = async (req, res, next) => {
                         token: user.token,
                         user: {
                             email: user.email,
-                    
+                            bodyParams: user.bodyParams
                         }
                 })  
                     }
@@ -113,7 +113,7 @@ const googleAuth = (req, res, next) => {
         ],
         response_type: "code",
         access_type: "offline",
-        promt: "consent"
+        prompt: "consent"
  
     })
 
