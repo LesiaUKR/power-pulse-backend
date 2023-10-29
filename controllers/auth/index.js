@@ -8,7 +8,7 @@ const validateBMR = require("../../middlewares/validateBMR");
 const schemaBMR = require("../../models/schemaBMR");
 const userChangeData = require("../../controllers/userChangeData");
 const uploadFile = require("../../middlewares/uploadFile");
-const { singup, singin, logout, current, googleAuth } = require("../../controllers/auth/controllerAuth");
+const { singup, singin, logout, current, googleAuth, googleAuthRedirect } = require("../../controllers/auth/controllerAuth");
 
 module.exports = {
     dailyMetrics,
@@ -25,5 +25,6 @@ module.exports = {
     singin,
     logout,
     current,
-    googleAuth
+    googleAuth,
+    googleAuthRedirect
 }

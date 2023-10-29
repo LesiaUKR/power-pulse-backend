@@ -31,6 +31,10 @@
     {
       "name": "Diary",
       "description": "Diary endpoints"
+    },
+    {
+      "name": "Statistics",
+      "description": "User statistics"
     }
   ],
   "paths": {
@@ -655,9 +659,30 @@
           }
         }
       }
+    },
+    "/statistics": {
+      "get": {
+        "tags": ["Statistics"],
+        "summary": "Get API database statistics",
+
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "parameters": [],
+
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
     }
   },
-
   "components": {
     "securitySchemes": {
       "Bearer": {
