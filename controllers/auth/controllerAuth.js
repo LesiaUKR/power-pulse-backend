@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const createError = require("../../helpers/createError");
 const queryString = require('querystring');
 const { JWT_SECRET_KEY } = process.env;
-const TIME_LIVE_JWT = "5m"
+const TIME_LIVE_JWT = "1d"
 const axios = require("axios");
 
 const singup = async (req, res, next) => {
