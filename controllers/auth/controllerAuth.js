@@ -3,9 +3,9 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require('bcryptjs');
 const createError = require("../../helpers/createError");
 const queryString = require('querystring');
-const url = require("url");
 const { JWT_SECRET_KEY } = process.env;
-
+const TIME_LIVE_JWT = "5m"
+const axios = require("axios");
 
 const singup = async (req, res, next) => {
     const { name, email, password: pass } = req.body;
@@ -13,7 +13,7 @@ const singup = async (req, res, next) => {
     try {
         const user = await Users.create({ ...req.body, avatarUrl: '' });
         const {_id} = user;
-        const token = jwt.sign({_id}, JWT_SECRET_KEY, { expiresIn: '1d' });
+        const token = jwt.sign({_id}, JWT_SECRET_KEY, { expiresIn: TIME_LIVE_JWT });
         const updateUser = await Users.findByIdAndUpdate(_id, {...req.body, password, token});
         res.status(201);
         res.json({
@@ -38,10 +38,10 @@ const singin = async (req, res, next) => {
     const user = await Users.findOne({ email });
     if (user) {
         const result = await bcrypt.compare(password, user.password);
-    
+            
         if (result)
             if (!user.token) {
-                const token = jwt.sign({ _id: user._id }, JWT_SECRET_KEY, { expiresIn: '1d' });
+                const token = jwt.sign({ _id: user._id }, JWT_SECRET_KEY, { expiresIn: TIME_LIVE_JWT });
                 const updateUser = await Users.findByIdAndUpdate(user._id, { token });
                 res.status(200);
                 res.json({
@@ -52,14 +52,39 @@ const singin = async (req, res, next) => {
                     }
                 })
             } else {
-                res.status(200);
-                res.json({
-                    token: user.token,
-                    user: {
-                        email: user.email,
+                try {
+                    const decodedToken = jwt.decode(user.token);
+                    if (decodedToken && (decodedToken.exp * 1000 < Date.now())) {
+                        const token = jwt.sign({ _id: user._id }, JWT_SECRET_KEY, { expiresIn: TIME_LIVE_JWT });
+                        const updateUser = await Users.findByIdAndUpdate(user._id, { token });
+                        console.log(token)
+                        res.status(200);
+                        res.json({
+                            token,
+                            user: {
+                                email: user.email,
                     
-                    }
+                            }
+                        
                 })
+                    } else {
+                        res.status(200);
+                        res.json({
+                        token: user.token,
+                        user: {
+                            email: user.email,
+                    
+                        }
+                })  
+                    }
+
+                } catch (err) {
+                    next(createError('UNAUTHORIZED', 'JWT error'))
+                    // console.log(err)
+                }
+                
+               
+                
             }
         else {
             next(createError('UNAUTHORIZED', 'Email or password is wrong'));
@@ -96,13 +121,13 @@ const googleAuth = (req, res, next) => {
     // 'https://www.googleapis.com/auth/userinfo.profile'
 }
 
-const googleAuthRedirect = async (req, res) => {
+const googleAuthRedirect = async (req, res, next) => {
     const fullUrl = `${req.protocol}://${req.host}${req.originalUrl}`;
     const urlObj = new URL(fullUrl);
     const urlParams = queryString.parse(urlObj.search);
-    const code = urlParams.code;
-
-    const tokenData = await axios({
+    const code = urlParams['?code'];
+    try {
+        const tokenData = await axios({
         url: "https://oauth2.googleapis.com/token",
         method: "post",
         data: {
@@ -112,17 +137,36 @@ const googleAuthRedirect = async (req, res) => {
             grant_type: "authorization_code",
             code
         }
-    });
-    const userData = await axios({
+        
+        });
+        const userData = await axios({
         url: "https://www.googleapis.com/oauth2/v2/userinfo",
         method: "get",
         headers: {
             Authorization: `Bearer ${tokenData.data.access_token}`
         }
-    })
+        });
 
+        const user = await Users.findOne({ email: userData.data.email })
+        req.body = {
+            name: userData.data.email,
+            email: userData.data.email,
+            password: userData.data.id
+            
+        }
+        
+        if (user) singin(req, res, next);
+        else singup(req, res, next);  
+        
+
+        
+    } catch (err) {
+        console.log(err.message)
+    }
+     
+    // return res.redirect(`${process.env.BASE_URL}/users`);
 }
-
+ 
 const current = async (req, res, next) => {
     const user = await Users.findOne({_id: req.user});
     if (!user) next(createError('UNAUTHORIZED', 'Not authorized'))
@@ -146,5 +190,6 @@ module.exports = {
     singin,
     logout,
     current,
-    googleAuth
+    googleAuth,
+    googleAuthRedirect
 }
