@@ -17,6 +17,10 @@ const getProductsByFilter = async (req, res) => {
     const { user: id } = req;
     const user = await User.findById(id);
     const bloodType = user.bodyParams.blood;
+    if (!bloodType) {
+      console.log("No information about your blood type");
+    }
+
     if (recommended === "true") {
       where[`groupBloodNotAllowed.${bloodType}`] = true;
     } else {
