@@ -23,11 +23,12 @@ const getProductsByFilter = async (req, res) => {
       where[`groupBloodNotAllowed.${bloodType}`] = false;
     }
   }
-
-  const products = await Product.find(where);
+  const { page = 1, limit = 50 } = req.query;
+  const products = await Product.find(where).limit(limit).skip(limit*(page-1));
   if (!products) {
     throw createError(errorType.BAD_REQUEST);
   }
+  
   res.json(products);
 };
 
