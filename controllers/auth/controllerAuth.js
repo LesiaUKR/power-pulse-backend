@@ -7,7 +7,7 @@ const { JWT_SECRET_KEY } = process.env;
 const TIME_LIVE_JWT = "1d";
 const axios = require("axios");
 
-const singup = async (req, res, next) => {
+const singup = async (req, res, next, gAuth=true) => {
   const { name, email, password: pass } = req.body;
   const password = await bcrypt.hash(pass, 10);
   try {
@@ -21,14 +21,16 @@ const singup = async (req, res, next) => {
       password,
       token,
     });
-    res.status(201);
-    res.json({
-      message: "User created",
-      name,
-      email,
-      token,
-      avatarUrl: user.avatarUrl,
-    });
+    if (gAuth) {
+      res.status(201);
+      res.json({
+        message: "User created",
+        name,
+        email,
+        token,
+        avatarUrl: user.avatarUrl,
+      });
+    }
   } catch (err) {
     if (err.code === 11000) {
       next(createError("CONFLICT", "Email in use"));
@@ -93,7 +95,7 @@ const singin = async (req, res, next) => {
           }
         } catch (err) {
           next(createError("UNAUTHORIZED", "JWT error"));
-          // console.log(err)
+          
         }
       }
     else {
@@ -125,7 +127,7 @@ const googleAuth = (req, res, next) => {
   return res.redirect(
     `https://accounts.google.com/o/oauth2/v2/auth?${strParams}`
   );
-  // 'https://www.googleapis.com/auth/userinfo.profile'
+  
 };
 
 const googleAuthRedirect = async (req, res, next) => {
@@ -160,15 +162,15 @@ const googleAuthRedirect = async (req, res, next) => {
       password: userData.data.id,
     };
 
-    if (user) singin(req, res, next);
-    else singup(req, res, next);
+    if (!user) await singup(req, res, next, false);
+    
   } catch (err) {
     console.log(err.message);
   }
 
-  // return res.redirect(`${process.env.BASE_URL}/users`);
+res.redirect(301, `http://localhost:5173/pj-react-777/googleAuth?body={"email": "${req.body.email}", "id": "${req.body.password}"}`);
 };
-
+ 
 const current = async (req, res, next) => {
   const user = await Users.findOne({ _id: req.user });
   if (!user) next(createError("UNAUTHORIZED", "Not authorized"));

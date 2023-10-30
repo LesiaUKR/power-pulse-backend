@@ -370,6 +370,22 @@
         "parameters": [
           {
             "in": "query",
+            "name": "page",
+            "required": false,
+            "type": "integer",
+            "description": "product page",
+            "default": 1
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer",
+            "description": "number of products per page",
+            "default": 50
+          },
+          {
+            "in": "query",
             "name": "search",
             "required": false,
             "type": "string",
