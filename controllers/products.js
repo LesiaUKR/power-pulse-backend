@@ -28,12 +28,18 @@ const getProductsByFilter = async (req, res) => {
     }
   }
   const { page = 1, limit = 50 } = req.query;
+  const total = await Product.find().count();
   const products = await Product.find(where).limit(limit).skip(limit*(page-1));
   if (!products) {
     throw createError(errorType.BAD_REQUEST);
   }
   
-  res.json(products);
+  res.json({
+    total,
+    page,
+    limit,
+    products
+  });
 };
 
 module.exports = {
