@@ -167,8 +167,9 @@ const googleAuthRedirect = async (req, res, next) => {
   } catch (err) {
     console.log(err.message);
   }
-
-res.redirect(301, `http://localhost:5173/pj-react-777/googleAuth?body={"email": "${req.body.email}", "id": "${req.body.password}"}`);
+res.redirect(301, `https://in-inka.github.io/pj-react-777/googleAuth?body={"email": "${req.body.email}", "id": "${req.body.password}"}`);
+// for test localhost
+// res.redirect(301, `http://localhost:5173/pj-react-777/googleAuth?body={"email": "${req.body.email}", "id": "${req.body.password}"}`);
 };
  
 const current = async (req, res, next) => {
